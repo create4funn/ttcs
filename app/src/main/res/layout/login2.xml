@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    tools:ignore="ExtraText">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="Get Started Free"
+        android:textColor="#FFFFFF"
+        android:textSize="38sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Free Forever. No Credit Card Needed"
+        android:textColor="#939393" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Email Address"
+        android:textColor="#939393" />
+
+    <EditText
+        android:id="@+id/edtemail"
+        android:inputType="textEmailSubject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="20dp"
+        android:hint="yourname@gmail.com"
+        android:padding="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingLeft="30dp"
+        android:background="@drawable/khung"
+        android:textColorHint="#939393"
+        />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Your Phone Number"
+        android:layout_margin="10dp"
+
+        android:textColor="#939393" />
+
+    <EditText
+        android:id="@+id/edtYourPhoneNumber"
+        android:inputType="number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="10dp"
+        android:hint="phone number"
+        android:padding="15dp"
+        android:paddingLeft="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/khung"
+        android:textColorHint="#939393" />
+
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:id="@+id/txttextView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Your Name"
+        android:layout_margin="10dp"
+        android:textColor="#939393" />
+
+    <EditText
+        android:id="@+id/edtyourname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="20dp"
+        android:hint="yourname"
+        android:padding="15dp"
+        android:paddingLeft="30dp"
+        android:textColor="#939393"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/khung"
+        android:textColorHint="#939393" />
+
+
+    <TextView
+        android:layout_marginTop="30dp"
+        android:id="@+id/txttextView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:layout_margin="10dp"
+        android:textColor="#939393" />
+
+    <EditText
+        android:id="@+id/edtpassword"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="20dp"
+        android:hint="password"
+        android:padding="15dp"
+        android:paddingLeft="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textColor="#939393"
+        android:background="@drawable/khung"
+        android:textColorHint="#939393" />
+
+    <Button
+        android:id="@+id/bntsignup"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="40dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/khung"
+        android:text="Sign up"
+        android:textSize="18sp" />
+
+</LinearLayout>

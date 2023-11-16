@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1C1A29"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="end"
+    android:id="@+id/drawer_layout"
+    tools:context=".Activity.MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            >
+
+            <ImageButton
+                android:id="@+id/btn_account"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#1C1A29"
+                android:src="@drawable/ic_account3"
+                />
+
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_gravity="center"
+
+                app:srcCompat="@drawable/logo2" />
+
+            <ImageButton
+                android:id="@+id/btn_menu"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.5"
+                android:background="#1C1A29"
+                app:srcCompat="@drawable/ic_menu2" />
+        </LinearLayout>
+
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+                <com.denzcoskun.imageslider.ImageSlider
+                    android:id="@+id/img_main_slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="162dp"
+                    app:iss_auto_cycle="true"
+                    app:iss_delay="1000"
+                    app:iss_period="1000"
+                    app:iss_text_align="CENTER"
+                    android:layout_marginTop="20dp">
+
+                </com.denzcoskun.imageslider.ImageSlider>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:weightSum="4"
+                    >
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Now showing"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="3"/>
+
+                    <TextView
+                        android:id="@+id/tv_viewmore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18dp"
+                        android:textColor="#FFFFFF"
+                        android:text="More"
+                        android:gravity="right"
+                        android:layout_weight="0.7"/>
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_next"
+                        android:background="@null"
+                        android:contentDescription="next"
+                        android:layout_weight="0.3"/>
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_dangchieu_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    >
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:weightSum="4"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="Coming soon "
+                        android:textColor="#FFFFFF"
+                        android:textSize="18dp"
+                        android:layout_marginLeft="10dp"/>
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18dp"
+                        android:textColor="#FFFFFF"
+                        android:text="More"
+                        android:gravity="right"
+                        android:layout_weight="0.7"/>
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_next"
+                        android:background="@null"
+                        android:contentDescription="next"
+                        android:layout_weight="0.3"/>
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_sapchieu_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/nav_view"
+        android:layout_gravity="end"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_menu"
+        android:background="#504D4E"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"/>
+
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
