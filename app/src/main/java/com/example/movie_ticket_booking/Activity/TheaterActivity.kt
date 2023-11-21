@@ -5,16 +5,23 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.movie_ticket_booking.Adapter.TheaterAdapter
+import com.example.movie_ticket_booking.Model.ShowtimeItem
+import com.example.movie_ticket_booking.Model.TheaterItem
 import com.example.movie_ticket_booking.R
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
 import java.util.*
+import kotlin.collections.ArrayList
 
 class TheaterActivity : AppCompatActivity() {
     private lateinit var calendarTextView: TextView
     private var year = 0
     private var month = 0
     private var day = 0
+    private val list = mutableListOf<TheaterItem>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.choosetheater)
@@ -48,6 +55,21 @@ class TheaterActivity : AppCompatActivity() {
                 updateCalendarTextView()
             }
         }
+
+
+        val showtimelist : List<ShowtimeItem> = listOf(
+            ShowtimeItem("10:10"),ShowtimeItem("20:10"),ShowtimeItem("22:10"),ShowtimeItem("20:10"),ShowtimeItem("20:10")
+        )
+        val theaterlist : List<TheaterItem> = listOf(
+            TheaterItem("Hồ Gươm", showtimelist),
+            TheaterItem("Mac Plaza", showtimelist),
+            TheaterItem("Hồ Gươm", showtimelist),
+            TheaterItem("Mac Plaza", showtimelist)
+        )
+        val rv_theater = findViewById<RecyclerView>(R.id.rv_theater)
+        val adapter = TheaterAdapter(theaterlist)
+        rv_theater.adapter = adapter
+        rv_theater.layoutManager = LinearLayoutManager(this)
 
         val btnNext = findViewById<Button>(R.id.btn_next)
         btnNext.setOnClickListener {

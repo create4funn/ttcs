@@ -1,33 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    >
+    android:layout_margin="5dp"
+    android:padding="10dp"
+    android:background="@drawable/outline_button">
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="10dp">
+        android:layout_marginBottom="10dp">
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="9dp"
+            android:background="@color/white"
+            android:layout_marginRight="10dp">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/logo2"
+                android:padding="5dp"/>
+        </androidx.cardview.widget.CardView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CGV  "
-            android:textColor="#AC3737"
-            android:textSize="17dp"/>
+            android:text="CGV "
+            android:textColor="#E12C2C"
+            android:textSize="22dp"
+            android:layout_gravity="center_vertical"
+            />
         <TextView
             android:id="@+id/tv_chose_theater"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CGV"
-            android:textColor="#000000"
-            android:textSize="17dp"/>
+            android:text=""
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:layout_marginTop="-1dp"
+            android:layout_gravity="center_vertical"
+            />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giá vé:  "
+            android:textColor="@color/white"
+            android:textSize="16dp"/>
+        <TextView
+            android:id="@+id/tv_ticket_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="70000"
+            android:textColor="@color/white"
+            android:textSize="16dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đ"
+            android:textColor="@color/white"
+            android:textSize="16dp"/>
+
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_hour"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
 
-</LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
