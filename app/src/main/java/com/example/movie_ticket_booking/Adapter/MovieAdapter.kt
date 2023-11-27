@@ -1,4 +1,4 @@
-package com.example.movie_ticket_booking
+package com.example.movie_ticket_booking.Adapter
 
 
 import android.view.LayoutInflater
@@ -7,9 +7,18 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.movie_ticket_booking.Model.MovieItem
+import com.example.movie_ticket_booking.R
+import com.squareup.picasso.Picasso
 
-class RvAdapter(private val filmdangchieu: List<listfilm>) : RecyclerView.Adapter<RvAdapter.PhimViewHolder>() {
+class MovieAdapter(private val onItemClick: (MovieItem) -> Unit) : RecyclerView.Adapter<MovieAdapter.PhimViewHolder>() {
 
+    private var moviesList: List<MovieItem> = listOf()
+
+    fun setData(movies: List<MovieItem>) {
+        moviesList = movies
+        notifyDataSetChanged()
+    }
     // ViewHolder class
     class PhimViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.imgfilm)
@@ -23,13 +32,17 @@ class RvAdapter(private val filmdangchieu: List<listfilm>) : RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: PhimViewHolder, position: Int) {
-        val currentItem = filmdangchieu[position]
-        holder.imageView.setImageResource(currentItem.image)
-        holder.tenfilmTextView.text = currentItem.tenfilm
-        holder.danhgiaTextView.text = currentItem.danhgia
+        val currentItem = moviesList[position]
+        Picasso.get().load(currentItem.img).into(holder.imageView)
+        holder.tenfilmTextView.text = currentItem.name
+        holder.danhgiaTextView.text = currentItem.duration
+
+        holder.itemView.setOnClickListener {
+            onItemClick.invoke(currentItem)
+        }
     }
 
     override fun getItemCount(): Int {
-        return filmdangchieu.size
+        return moviesList.size
     }
 }

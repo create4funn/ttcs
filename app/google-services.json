@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1003139167112",
+    "firebase_url": "https://thuctapcoso-a2c0a-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "thuctapcoso-a2c0a",
+    "storage_bucket": "thuctapcoso-a2c0a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1003139167112:android:2b4bfc519df2b1463ac03d",
+        "android_client_info": {
+          "package_name": "com.example.movie_ticket_booking"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEUAqw_Fzl6DW0YAuLsgS7gat0PxdCoqs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

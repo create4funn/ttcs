@@ -14,30 +14,29 @@ import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.movie_ticket_booking.R
-import com.example.movie_ticket_booking.RvAdapter
-import com.example.movie_ticket_booking.listfilm
+import com.example.movie_ticket_booking.Adapter.MovieAdapter
+import com.example.movie_ticket_booking.Model.MovieItem
+import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
+import kotlin.collections.ArrayList
 
 //import com.github.jhonnyx2012.horizontalpicker.DatePickerListener
 //import com.github.jhonnyx2012.horizontalpicker.HorizontalPicker
 //import org.joda.time.DateTime
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var calendarTextView: TextView
-    private var year = 0
-    private var month = 0
-    private var day = 0
+
     private lateinit var slider: ImageSlider
 
     private lateinit var imageSlider: ImageSlider
 
     private lateinit var recyclerView: RecyclerView
-    private val listfilm = ArrayList<listfilm>()
+    private val MovieItem = ArrayList<MovieItem>()
 
     private lateinit var recyclerView1: RecyclerView
-    private val listfilm1 = ArrayList<listfilm>()
+    private val movieItem1 = ArrayList<MovieItem>()
 
-
+    private lateinit var db:FirebaseFirestore
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,42 +56,80 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView_dangchieu_main)
        // recyclerView.layoutManager = LinearLayoutManager(this) // You can use LinearLayoutManager or GridLayoutManager
 
-        val filmList = mutableListOf(
-            listfilm(R.drawable.demkinhhoang, "Đêm kinh hoàng", "120 min"),
-            listfilm(R.drawable.mynhandaochich, "Mỹ nhân đạo chích", "120 min"),
-            listfilm(R.drawable.nguoivocuoicung, "Đấu trường sinh tử", "120 min"),
-            listfilm(R.drawable.nguoivocuoicung, "Đấu trường sinh tử", "120 min"),
-            listfilm(R.drawable.nguoivocuoicung, "Đấu trường sinh tử", "120 min"),
-            listfilm(R.drawable.nguoivocuoicung, "Người vợ cuối cùng", "120 min")
-        )
-        listfilm.addAll(filmList)
-        val adapter = RvAdapter(listfilm)
-        recyclerView.adapter = adapter
+//        val filmList = mutableListOf(
+//            MovieItem(R.drawable.demkinhhoang, "Đêm kinh hoàng", "120 min"),
+//            MovieItem(R.drawable.mynhandaochich, "Mỹ nhân đạo chích", "120 min"),
+//            MovieItem(R.drawable.nguoivocuoicung, "Đấu trường sinh tử", "120 min"),
+//            MovieItem(R.drawable.nguoivocuoicung, "Đấu trường sinh tử", "120 min"),
+//            MovieItem(R.drawable.nguoivocuoicung, "Đấu trường sinh tử", "120 min"),
+//            MovieItem(R.drawable.nguoivocuoicung, "Người vợ cuối cùng", "120 min")
+//        )
+//        MovieItem.addAll(filmList)
+
+        db = FirebaseFirestore.getInstance()
+
+//        val movieAdapter = MovieAdapter()
+//        recyclerView.adapter = movieAdapter
         recyclerView.layoutManager = LinearLayoutManager(
             this,
             LinearLayoutManager.HORIZONTAL,
             false
         )
 
-// recycleview film sắp chiếu
-        recyclerView1 = findViewById(R.id.recyclerView_sapchieu_main)
-      //  recyclerView1.layoutManager = LinearLayoutManager(this) // You can use LinearLayoutManager or GridLayoutManager
+        db.collection("movies").addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                // Xử lý lỗi nếu có
+                return@addSnapshotListener
+            }
+            val movieList = mutableListOf<MovieItem>()
 
-        val filmList1 = mutableListOf(
-            listfilm(R.drawable.nguoivocuoicung, "Đại náo cung trăng", "120 min"),
-            listfilm(R.drawable.nguoivocuoicung, "Đấu trường sinh tử", "120 min"),
-            listfilm(R.drawable.nguoivocuoicung, "Đấu trường sinh tử", "120 min"),
-            listfilm(R.drawable.nguoivocuoicung, "Đấu trường sinh tử", "120 min"),
-            listfilm(R.drawable.nguoivocuoicung, "The Dark Knight", "120 min")
-        )
-        listfilm1.addAll(filmList1)
-        val adapter1 = RvAdapter(listfilm1)
-        recyclerView1.adapter = adapter1
-        recyclerView1.layoutManager = LinearLayoutManager(
-            this,
-            LinearLayoutManager.HORIZONTAL,
-            false
-        )
+            for (document in snapshot!!) {
+                val id = document.id
+                val name = document.getString("name")
+                val duration = document.getString("duration")
+                val img = document.getString("img")
+                val cast = document.getString("cast")
+                val director = document.getString("director")
+                val summary = document.getString("summary")
+                val trailer = document.getString("trailer")
+                val age = document.getString("age")
+                val price = document.getLong("price")
+                val genre = document.getString("genre")
+
+                val myData = MovieItem(id, img!!, name!!, duration!!,age!!,cast!!,director!!, price!!, summary!!, trailer!!, genre!!)
+                movieList.add(myData)
+
+            }
+            val movieAdapter = MovieAdapter { selectedMovie ->
+                AppData.selectedMovie = selectedMovie
+                val intent = Intent(this, DetailActivity::class.java)
+                startActivity(intent)
+            }
+            recyclerView.adapter = movieAdapter
+            movieAdapter.setData(movieList)
+        }
+
+
+
+// recycleview film sắp chiếu
+//        recyclerView1 = findViewById(R.id.recyclerView_sapchieu_main)
+//      //  recyclerView1.layoutManager = LinearLayoutManager(this) // You can use LinearLayoutManager or GridLayoutManager
+//
+//        val filmList1 = mutableListOf(
+//            MovieItem(R.drawable.nguoivocuoicung, "Đại náo cung trăng", "120 min"),
+//            MovieItem(R.drawable.nguoivocuoicung, "Đấu trường sinh tử", "120 min"),
+//            MovieItem(R.drawable.nguoivocuoicung, "Đấu trường sinh tử", "120 min"),
+//            MovieItem(R.drawable.nguoivocuoicung, "Đấu trường sinh tử", "120 min"),
+//            MovieItem(R.drawable.nguoivocuoicung, "The Dark Knight", "120 min")
+//        )
+//        movieItem1.addAll(filmList1)
+//        val adapter1 = RvAdapter(movieItem1)
+//        recyclerView1.adapter = adapter1
+//        recyclerView1.layoutManager = LinearLayoutManager(
+//            this,
+//            LinearLayoutManager.HORIZONTAL,
+//            false
+//        )
 
 
         // navigation
@@ -126,48 +163,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, DetailActivity::class.java)
             startActivity(intent)
         }
-//        val slider = findViewById<ImageSlider>(R.id.image_slider)
-//
-//        val imageList = ArrayList<SlideModel>()
-//        imageList.add(SlideModel(R.drawable.nen))
-//        imageList.add(SlideModel(R.drawable.mot))
-//        imageList.add(SlideModel(R.drawable.nguoivocuoicung))
-//
-//        slider.setImageList(imageList, ScaleTypes.FIT)
-//        calendarTextView = findViewById(R.id.cal_tv)
-//
-//
-//        val startDate: Calendar = Calendar.getInstance()
-//        startDate.add(Calendar.MONTH, -1)
-//
-//
-//        val endDate: Calendar = Calendar.getInstance()
-//        endDate.add(Calendar.MONTH, 1)
-//
-//        // Horizontal Calendar setup
-//        val horizontalCalendar = HorizontalCalendar.Builder(this, R.id.calendar_view)
-//            .range(startDate, endDate)
-//            .datesNumberOnScreen(7)
-//            .build()
-//
-//
-//        year = startDate.get(Calendar.YEAR)
-//        month = startDate.get(Calendar.MONTH) + 1
-//        day = startDate.get(Calendar.DAY_OF_MONTH)
-//        updateCalendarTextView()
-//
-//
-//        horizontalCalendar.calendarListener = object : HorizontalCalendarListener() {
-//            override fun onDateSelected(date: Calendar, position: Int) {
-//                year = date.get(Calendar.YEAR)
-//                month = date.get(Calendar.MONTH) + 1
-//                day = date.get(Calendar.DAY_OF_MONTH)
-//                updateCalendarTextView()
-//            }
-//        }
+
     }
 
-//    private fun updateCalendarTextView() {
-//        calendarTextView.text = "$day/$month/$year "
-//    }
+
 }
+
+
