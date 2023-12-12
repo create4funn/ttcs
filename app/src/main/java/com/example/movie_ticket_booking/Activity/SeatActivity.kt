@@ -1,12 +1,14 @@
 package com.example.movie_ticket_booking.Activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.GridLayout
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.movie_ticket_booking.Fragment.FoodFragment
@@ -20,28 +22,27 @@ class SeatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movieseat)
-        //seatLayout = findViewById(R.id.gv_seatLayout)
 
-        //initializeSeatLayout()
-
-//        reserveButton.setOnClickListener {
-//            // Handle seat reservation logic here
-//            val reservedSeats = getReservedSeats()
-//            // Display a message with the reserved seats
-//            Toast.makeText(this, "You choose: $reservedSeats", Toast.LENGTH_SHORT).show()
-//        }
-
-//        val btn_seat_book = findViewById<Button>(R.id.btn_seat_book)
-//        btn_seat_book.setOnClickListener {
-//            val intent = Intent(this, FoodActivity::class.java)
-//            startActivity(intent)
-//        }
-
+        val btnBack = findViewById<ImageView>(R.id.btn_back_seat)
+        btnBack.setOnClickListener {
+            finish()
+        }
+        val movie = AppData.selectedMovie
+        val tv_actionbar = findViewById<TextView>(R.id.tv_actionBar)
+        tv_actionbar.text = movie?.name
         replaceFragment(SeatFragment())
         val btnbook = findViewById<Button>(R.id.btn_seat_book)
         btnbook.setOnClickListener {
 
-            replaceFragment(FoodFragment())
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_layout_seat)
+
+            if (currentFragment is FoodFragment) {
+                val intent = Intent(this, PaymentActivity::class.java)
+                startActivity(intent)
+            } else {
+
+                replaceFragment(FoodFragment())
+            }
         }
     }
 

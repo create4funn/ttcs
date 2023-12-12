@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/btn_back"
+            android:id="@+id/btn_back_detail"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:backgroundTint="#2F2C44"
@@ -36,257 +36,270 @@
             android:textSize="25dp" />
     </LinearLayout>
 
-    <com.potyvideo.library.AndExoPlayerView
-        android:id="@+id/videoview"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/action_bar" />
-
-    <ImageView
-        android:id="@+id/img_detail"
-        android:layout_width="150dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="190dp"
-        android:src="@drawable/nguoivocuoicung"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/videoview" />
-
-    <TextView
-        android:id="@+id/detail_tv_movie_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="Người Vợ cuối cùng"
-        android:textColor="@color/white"
-        android:textSize="23dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/img_detail"
-        app:layout_constraintTop_toBottomOf="@+id/videoview" />
-
-    <TextView
-        android:id="@+id/genre"
-        android:layout_width="70dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:text="Genre"
-        android:textColor="#D1CACA"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_genre"
-        app:layout_constraintStart_toEndOf="@id/img_detail"
-        app:layout_constraintTop_toBottomOf="@+id/detail_tv_movie_name" />
-
-    <TextView
-        android:id="@+id/tv_genre"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:text="Tâm lý, Tình cảm"
-        android:textColor="#D1CACA"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/genre"
-        app:layout_constraintTop_toBottomOf="@+id/detail_tv_movie_name" />
-
-    <TextView
-        android:id="@+id/director"
-        android:layout_width="70dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:text="Director"
-        android:textColor="#D1CACA"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_director"
-        app:layout_constraintStart_toEndOf="@id/img_detail"
-        app:layout_constraintTop_toBottomOf="@+id/tv_genre" />
-
-    <TextView
-        android:id="@+id/tv_director"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:text="Victor Vũ"
-        android:textColor="#D1CACA"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/director"
-        app:layout_constraintTop_toBottomOf="@+id/tv_genre" />
-
-    <TextView
-        android:id="@+id/cast"
-        android:layout_width="70dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:text="Cast"
-        android:textColor="#D1CACA"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_cast"
-        app:layout_constraintStart_toEndOf="@+id/img_detail"
-        app:layout_constraintTop_toBottomOf="@+id/tv_director" />
-
-    <TextView
-        android:id="@+id/tv_cast"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-
-        android:text="Victor Vũ, D1CACA D1CACA"
-        android:textColor="#D1CACA"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cast"
-        app:layout_constraintTop_toBottomOf="@+id/tv_director" />
-
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
-        android:layout_width="120dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#1C1A29"
-        app:cardCornerRadius="15dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_detail"
-        app:strokeColor="#8A8989"
-        app:strokeWidth="1dp">
-
-
-        <me.zhanghai.android.materialratingbar.MaterialRatingBar
-            style="@style/Widget.MaterialRatingBar.RatingBar"
-            android:layout_width="96dp"
-            android:layout_height="35dp"
-            android:layout_gravity="top|center"
-            android:padding="5dp"
-            android:rating="4.5" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_gravity="bottom"
-            android:gravity="top|center_horizontal"
-            android:text="8.9/10"
-            android:textColor="@color/white"
-            android:textSize="19dp"
-            android:textStyle="bold" />
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView3"
-        android:layout_width="120dp"
-        android:layout_height="70dp"
-        android:backgroundTint="#1C1A29"
-
-        app:cardCornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
-        app:layout_constraintEnd_toStartOf="@+id/materialCardView2"
-        app:layout_constraintStart_toEndOf="@+id/materialCardView"
-        app:layout_constraintTop_toTopOf="@+id/materialCardView"
-        app:strokeColor="#8A8989"
-        app:strokeWidth="1dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:gravity="center"
-            android:text="Duration"
-            android:textColor="#9E9999"
-            android:textSize="17dp" />
-
-        <TextView
-            android:id="@+id/tv_duration"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_gravity="bottom"
-            android:gravity="top|center_horizontal"
-            android:text="120 min"
-            android:textColor="@color/white"
-            android:textSize="19dp"
-            android:textStyle="bold" />
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView2"
-        android:layout_width="120dp"
-        android:layout_height="70dp"
-        android:layout_marginEnd="10dp"
-
-        android:backgroundTint="#1C1A29"
-        app:cardCornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/materialCardView3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/materialCardView3"
-        app:strokeColor="#8A8989"
-        app:strokeWidth="1dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:gravity="center"
-            android:text="P-G"
-            android:textColor="#9E9999"
-            android:textSize="17dp" />
-
-        <TextView
-            android:id="@+id/tv_age"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_gravity="bottom"
-            android:gravity="top|center_horizontal"
-            android:text="18+"
-            android:textColor="#9E9999"
-            android:textSize="19dp"
-            android:textStyle="bold" />
-    </com.google.android.material.card.MaterialCardView>
-
-    <TextView
-        android:id="@+id/tv_chitiet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Chi tiết"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView3" />
-
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@id/detail_btn_book_now"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_chitiet">
+        app:layout_constraintTop_toBottomOf="@+id/action_bar">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="wrap_content">
+
+            <com.potyvideo.library.AndExoPlayerView
+                android:id="@+id/videoview"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/img_detail"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="190dp"
+                android:src="@drawable/nguoivocuoicung"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/videoview" />
+
+            <TextView
+                android:id="@+id/detail_tv_movie_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Người Vợ cuối cùng"
+                android:textColor="@color/white"
+                android:textSize="23dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/img_detail"
+                app:layout_constraintTop_toBottomOf="@+id/videoview" />
+
+            <TextView
+                android:id="@+id/genre"
+                android:layout_width="70dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Genre"
+                android:textColor="#D1CACA"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_genre"
+                app:layout_constraintStart_toEndOf="@id/img_detail"
+                app:layout_constraintTop_toBottomOf="@+id/detail_tv_movie_name" />
+
+            <TextView
+                android:id="@+id/tv_genre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="Tâm lý, Tình cảm"
+                android:textColor="#D1CACA"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/genre"
+                app:layout_constraintTop_toBottomOf="@+id/detail_tv_movie_name" />
+
+            <TextView
+                android:id="@+id/director"
+                android:layout_width="70dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="20dp"
+                android:text="Director"
+                android:textColor="#D1CACA"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_director"
+                app:layout_constraintStart_toEndOf="@id/img_detail"
+                app:layout_constraintTop_toBottomOf="@+id/tv_genre" />
+
+            <TextView
+                android:id="@+id/tv_director"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="Victor Vũ"
+                android:textColor="#D1CACA"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/director"
+                app:layout_constraintTop_toBottomOf="@+id/tv_genre" />
+
+            <TextView
+                android:id="@+id/cast"
+                android:layout_width="70dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="20dp"
+                android:text="Cast"
+                android:textColor="#D1CACA"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_cast"
+                app:layout_constraintStart_toEndOf="@+id/img_detail"
+                app:layout_constraintTop_toBottomOf="@+id/tv_director" />
+
+            <TextView
+                android:id="@+id/tv_cast"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+
+                android:text="Victor Vũ, D1CACA D1CACA"
+                android:textColor="#D1CACA"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cast"
+                app:layout_constraintTop_toBottomOf="@+id/tv_director" />
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView"
+                android:layout_width="120dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#1C1A29"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_detail"
+                app:strokeColor="#8A8989"
+                app:strokeWidth="1dp">
+
+
+                <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                    style="@style/Widget.MaterialRatingBar.RatingBar"
+                    android:layout_width="96dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="top|center"
+                    android:padding="5dp"
+                    android:rating="4.5" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_gravity="bottom"
+                    android:gravity="top|center_horizontal"
+                    android:text="8.9/10"
+                    android:textColor="@color/white"
+                    android:textSize="19dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView3"
+                android:layout_width="120dp"
+                android:layout_height="70dp"
+                android:backgroundTint="#1C1A29"
+
+                app:cardCornerRadius="15dp"
+                app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
+                app:layout_constraintEnd_toStartOf="@+id/materialCardView2"
+                app:layout_constraintStart_toEndOf="@+id/materialCardView"
+                app:layout_constraintTop_toTopOf="@+id/materialCardView"
+                app:strokeColor="#8A8989"
+                app:strokeWidth="1dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center"
+                    android:text="Duration"
+                    android:textColor="#9E9999"
+                    android:textSize="17dp" />
+
+                <TextView
+                    android:id="@+id/tv_duration"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_gravity="bottom"
+                    android:gravity="top|center_horizontal"
+                    android:text="120 min"
+                    android:textColor="@color/white"
+                    android:textSize="19dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView2"
+                android:layout_width="120dp"
+                android:layout_height="70dp"
+                android:layout_marginEnd="10dp"
+
+                android:backgroundTint="#1C1A29"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintBottom_toBottomOf="@+id/materialCardView3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/materialCardView3"
+                app:strokeColor="#8A8989"
+                app:strokeWidth="1dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center"
+                    android:text="P-G"
+                    android:textColor="#9E9999"
+                    android:textSize="17dp" />
+
+                <TextView
+                    android:id="@+id/tv_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_gravity="bottom"
+                    android:gravity="top|center_horizontal"
+                    android:text="18+"
+                    android:textColor="#9E9999"
+                    android:textSize="19dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tv_chitiet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Detail"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardView3" />
+
+
+            <!--            <ScrollView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="80dp"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/tv_chitiet">-->
+
+            <!--                <LinearLayout-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:orientation="vertical">-->
             <kr.co.prnd.readmore.ReadMoreTextView
                 android:id="@+id/tv_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
                 android:text="dsfsdfd"
                 android:textColor="@color/white"
                 android:textSize="18dp"
 
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_chitiet"
                 app:readMoreColor="#3F4EA1"
                 app:readMoreMaxLine="3"
-                app:readMoreText="…more"
-                />
-        </LinearLayout>
+                app:readMoreText="…more" />
+            <!--                </LinearLayout>-->
+            <!--            </ScrollView>-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-
-
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/detail_btn_book_now"
@@ -302,6 +315,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

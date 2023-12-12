@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/btn_back"
+            android:id="@+id/btn_back_seat"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:backgroundTint="#2F2C44"
@@ -29,14 +29,15 @@
             android:src="@drawable/back_icon3" />
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_actionBar"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
-            android:gravity="center"
-            android:text="The Last Wife"
+            android:text=""
+            android:gravity="center|left"
+            android:textSize="25dp"
             android:textColor="@color/white"
-            android:textSize="30dp" />
+             />
     </LinearLayout>
 
     <FrameLayout

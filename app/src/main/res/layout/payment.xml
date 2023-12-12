@@ -30,9 +30,9 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:layout_marginLeft="20dp"
-            android:text="Thanh toán"
+            android:text="Payment"
             android:textColor="@color/white"
-            android:textSize="30dp" />
+            android:textSize="25dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -46,9 +46,9 @@
         <ImageView
             android:id="@+id/payment_img"
             android:layout_width="120dp"
-            android:layout_height="match_parent"
+            android:layout_height="170dp"
             tools:srcCompat="@tools:sample/avatars"
-            android:scaleType="center"/>
+            android:scaleType="centerCrop"/>
 
         <LinearLayout
             android:layout_width="match_parent"

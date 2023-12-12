@@ -14,7 +14,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/btn_back"
+            android:id="@+id/btn_back_theater"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:backgroundTint="#2F2C44"
@@ -22,14 +22,15 @@
             android:src="@drawable/back_icon3" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tv_actionBar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
-            android:gravity="center"
-            android:text="The Last Wife"
+            android:gravity="center|left"
+            android:textSize="25dp"
+            android:text=""
             android:textColor="@color/white"
-            android:textSize="30dp" />
+            />
     </LinearLayout>
     <!--    <com.github.jhonnyx2012.horizontalpicker.HorizontalPicker-->
     <!--        android:id="@+id/datePicker"-->

@@ -3,6 +3,7 @@ package com.example.movie_ticket_booking.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,6 +21,8 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var cast : TextView
     private lateinit var summary : TextView
     private lateinit var video : AndExoPlayerView
+    private lateinit var btnBack: ImageView
+    private lateinit var btnBookDetail: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detail)
@@ -27,6 +30,10 @@ class DetailActivity : AppCompatActivity() {
         val movie = AppData.selectedMovie
 
         initial()
+        val check = intent.getBooleanExtra("check",false)
+        if(!check){
+            btnBookDetail.visibility = View.GONE
+        }
 
         Picasso.get().load(movie?.img).into(img)
         name.text = movie?.name
@@ -40,12 +47,13 @@ class DetailActivity : AppCompatActivity() {
             video.setSource(movie.trailer)
         }
 
-
-
-        val btnBookDetail = findViewById<Button>(R.id.detail_btn_book_now)
         btnBookDetail.setOnClickListener {
             val intent = Intent(this, TheaterActivity::class.java)
             startActivity(intent)
+        }
+
+        btnBack.setOnClickListener {
+            finish()
         }
     }
 
@@ -59,6 +67,8 @@ class DetailActivity : AppCompatActivity() {
         cast = findViewById(R.id.tv_cast)
         summary = findViewById(R.id.tv_summary)
         video = findViewById(R.id.videoview)
+        btnBack = findViewById(R.id.btn_back_detail)
+        btnBookDetail = findViewById<Button>(R.id.detail_btn_book_now)
     }
 
 

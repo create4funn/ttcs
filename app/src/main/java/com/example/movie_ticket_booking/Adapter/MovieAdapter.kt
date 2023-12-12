@@ -1,15 +1,18 @@
 package com.example.movie_ticket_booking.Adapter
 
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.movie_ticket_booking.Model.MovieItem
 import com.example.movie_ticket_booking.R
 import com.squareup.picasso.Picasso
+import kotlin.coroutines.coroutineContext
 
 class MovieAdapter(private val onItemClick: (MovieItem) -> Unit) : RecyclerView.Adapter<MovieAdapter.PhimViewHolder>() {
 

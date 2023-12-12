@@ -1,5 +1,6 @@
 package com.example.movie_ticket_booking.Fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,13 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.movie_ticket_booking.Activity.AppData
+import com.example.movie_ticket_booking.Activity.DetailActivity
+import com.example.movie_ticket_booking.Adapter.FoodAdapter
+import com.example.movie_ticket_booking.Adapter.MovieAdapter
+import com.example.movie_ticket_booking.Model.FoodItem
 import com.example.movie_ticket_booking.R
-import com.example.recycleviewdemo.FoodAdapter
-import com.example.recycleviewdemo.FoodItem
+
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class FoodFragment : Fragment() {
-    private val foodItems = ArrayList<FoodItem>()
+
+    private lateinit var db:FirebaseFirestore
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,34 +33,31 @@ class FoodFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView_food)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = FoodAdapter(foodItems)
-        recyclerView.adapter = adapter
+        db = FirebaseFirestore.getInstance()
+        db.collection("foods").addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                // Xử lý lỗi nếu có
+                return@addSnapshotListener
+            }
+            val foodList = mutableListOf<FoodItem>()
 
-        // Add sample food items
-        foodItems.add(
-            FoodItem("Pizza", "Delicious pizza with your choice of toppings.",
-            R.drawable.pizza,20000)
-        )
-        foodItems.add(
-            FoodItem("Burger", "Juicy burgers with a variety of ingredients.",
-            R.drawable.hamburger,16000)
-        )
-        foodItems.add(
-            FoodItem("Popcorn","You can choose some seasonings to mix with it.",
-            R.drawable.popcorn,25000)
-        )
-        // Add more food items as needed
-        foodItems.add(FoodItem("French Fried","", R.drawable.french_fried,100000))
-        foodItems.add(FoodItem("Milo","", R.drawable.milo_lon,30000))
-        foodItems.add(FoodItem("Coca Cola","", R.drawable.coca_cola,15000))
-        foodItems.add(FoodItem("Pepsi","", R.drawable.pepsi,15000))
-        foodItems.add(
-            FoodItem("Combo 1","Include: 1 beef burger size L, and Any type of drink.",
-            R.drawable.combo_1bur_1frfried,100000)
-        )
-        foodItems.add(FoodItem("Black Coffee","", R.drawable.coffee,20000))
-        foodItems.add(FoodItem("Snack","", R.drawable.snack,10000))
-        adapter.notifyDataSetChanged()
+            for (document in snapshot!!) {
+                val id = document.id
+                val name = document.getString("name")
+                val img = document.getString("img")
+                val des = document.getString("description")
+                val price = document.getLong("price")
+
+
+                val myData = FoodItem(id, name!!, des!!,  price!!,img!!)
+                foodList.add(myData)
+
+            }
+            val foodAdapter = FoodAdapter()
+            recyclerView.adapter = foodAdapter
+            foodAdapter.setData(foodList)
+        }
+
 
 
     }

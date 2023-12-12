@@ -3,30 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="300dp"
     android:gravity="center|bottom"
-    android:background="#595757"
+    android:background="#595757">
 
-    >
     <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/profile_image"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:src="@drawable/momo"
-        app:civ_border_width="1dp"
-        app:civ_border_color="#FF000000"/>
+        android:layout_width="108dp"
+        android:layout_height="110dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/catavata"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="1dp" />
 
     <TextView
+        android:id="@+id/profile_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dao Ngoc Khanh"
+        android:text="Username"
         android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:layout_margin="5dp"
-        />
+        android:textSize="18dp" />
+
     <TextView
+        android:id="@+id/profile_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"

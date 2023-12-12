@@ -2,75 +2,77 @@ package com.example.movie_ticket_booking.Activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.movie_ticket_booking.R
 import com.example.movie_ticket_booking.Adapter.MovieAdapter
 import com.example.movie_ticket_booking.Model.MovieItem
+import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-//import com.github.jhonnyx2012.horizontalpicker.DatePickerListener
-//import com.github.jhonnyx2012.horizontalpicker.HorizontalPicker
-//import org.joda.time.DateTime
+
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var slider: ImageSlider
 
     private lateinit var imageSlider: ImageSlider
-
     private lateinit var recyclerView: RecyclerView
-    private val MovieItem = ArrayList<MovieItem>()
+    private lateinit var recyclerView2: RecyclerView
+    private lateinit var profile_image: ImageView
+    private lateinit var profile_email: TextView
+    private lateinit var profile_username: TextView
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var btnMenu:ImageButton
+    private lateinit var btnAccount:ImageButton
 
-    private lateinit var recyclerView1: RecyclerView
-    private val movieItem1 = ArrayList<MovieItem>()
-
-    private lateinit var db:FirebaseFirestore
+    private lateinit var mNavigationView: NavigationView
+    private var db = FirebaseFirestore.getInstance()
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+        initUi()
+        // navigation
+
+        navigation()
+
         //slider qunảng cáo
-        imageSlider = findViewById(R.id.img_main_slider)
-        val imageList = ArrayList<SlideModel>()
 
-        imageList.add(SlideModel(R.drawable.banner1))
-        imageList.add(SlideModel(R.drawable.banner2))
-        imageList.add(SlideModel(R.drawable.banner3))
+        slider()
 
-        imageSlider.setImageList(imageList, ScaleTypes.FIT)
+        showUserInformation()
 
-// recycleview film đang chiếu
-        recyclerView = findViewById(R.id.recyclerView_dangchieu_main)
-       // recyclerView.layoutManager = LinearLayoutManager(this) // You can use LinearLayoutManager or GridLayoutManager
 
-//        val filmList = mutableListOf(
-//            MovieItem(R.drawable.demkinhhoang, "Đêm kinh hoàng", "120 min"),
-//            MovieItem(R.drawable.mynhandaochich, "Mỹ nhân đạo chích", "120 min"),
-//            MovieItem(R.drawable.nguoivocuoicung, "Đấu trường sinh tử", "120 min"),
-//            MovieItem(R.drawable.nguoivocuoicung, "Đấu trường sinh tử", "120 min"),
-//            MovieItem(R.drawable.nguoivocuoicung, "Đấu trường sinh tử", "120 min"),
-//            MovieItem(R.drawable.nguoivocuoicung, "Người vợ cuối cùng", "120 min")
-//        )
-//        MovieItem.addAll(filmList)
 
-        db = FirebaseFirestore.getInstance()
 
-//        val movieAdapter = MovieAdapter()
-//        recyclerView.adapter = movieAdapter
+
         recyclerView.layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+        recyclerView2.layoutManager = LinearLayoutManager(
             this,
             LinearLayoutManager.HORIZONTAL,
             false
@@ -81,61 +83,61 @@ class MainActivity : AppCompatActivity() {
                 // Xử lý lỗi nếu có
                 return@addSnapshotListener
             }
-            val movieList = mutableListOf<MovieItem>()
+            val listNowShowing = mutableListOf<MovieItem>()
+            val listComingSoon = mutableListOf<MovieItem>()
+            val curentDate = Date()
 
             for (document in snapshot!!) {
-                val id = document.id
-                val name = document.getString("name")
-                val duration = document.getString("duration")
-                val img = document.getString("img")
-                val cast = document.getString("cast")
-                val director = document.getString("director")
-                val summary = document.getString("summary")
-                val trailer = document.getString("trailer")
-                val age = document.getString("age")
-                val price = document.getLong("price")
-                val genre = document.getString("genre")
 
-                val myData = MovieItem(id, img!!, name!!, duration!!,age!!,cast!!,director!!, price!!, summary!!, trailer!!, genre!!)
-                movieList.add(myData)
+                val startDateString = document.getString("start")
+                val startDate = SimpleDateFormat("dd/MM/yyyy").parse(startDateString)
 
+                if(startDate <= curentDate){
+                    val movie = getMovieItemFromDocument(document)
+                    listNowShowing.add(movie)
+                } else {
+                    // Phim sắp khởi chiếu
+                    val movie = getMovieItemFromDocument(document)
+                    listComingSoon.add(movie)
+                }
             }
-            val movieAdapter = MovieAdapter { selectedMovie ->
+            val adapterNowShowing = MovieAdapter { selectedMovie ->
                 AppData.selectedMovie = selectedMovie
                 val intent = Intent(this, DetailActivity::class.java)
+                intent.putExtra("check", true)
                 startActivity(intent)
             }
-            recyclerView.adapter = movieAdapter
-            movieAdapter.setData(movieList)
+            recyclerView.adapter = adapterNowShowing
+            adapterNowShowing.setData(listNowShowing)
+
+            val adapterComingSoon = MovieAdapter { selectedMovie ->
+                AppData.selectedMovie = selectedMovie
+                val intent = Intent(this, DetailActivity::class.java)
+                intent.putExtra("check", false)
+                startActivity(intent)
+            }
+            recyclerView2.adapter = adapterComingSoon
+            adapterComingSoon.setData(listComingSoon)
         }
 
 
 
-// recycleview film sắp chiếu
-//        recyclerView1 = findViewById(R.id.recyclerView_sapchieu_main)
-//      //  recyclerView1.layoutManager = LinearLayoutManager(this) // You can use LinearLayoutManager or GridLayoutManager
-//
-//        val filmList1 = mutableListOf(
-//            MovieItem(R.drawable.nguoivocuoicung, "Đại náo cung trăng", "120 min"),
-//            MovieItem(R.drawable.nguoivocuoicung, "Đấu trường sinh tử", "120 min"),
-//            MovieItem(R.drawable.nguoivocuoicung, "Đấu trường sinh tử", "120 min"),
-//            MovieItem(R.drawable.nguoivocuoicung, "Đấu trường sinh tử", "120 min"),
-//            MovieItem(R.drawable.nguoivocuoicung, "The Dark Knight", "120 min")
-//        )
-//        movieItem1.addAll(filmList1)
-//        val adapter1 = RvAdapter(movieItem1)
-//        recyclerView1.adapter = adapter1
-//        recyclerView1.layoutManager = LinearLayoutManager(
-//            this,
-//            LinearLayoutManager.HORIZONTAL,
-//            false
-//        )
 
 
-        // navigation
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
-        val btnMenu = findViewById<ImageButton>(R.id.btn_menu)
 
+    }
+
+    private fun slider() {
+        val imageList = ArrayList<SlideModel>()
+
+        imageList.add(SlideModel(R.drawable.banner1))
+        imageList.add(SlideModel(R.drawable.banner2))
+        imageList.add(SlideModel(R.drawable.banner3))
+
+        imageSlider.setImageList(imageList, ScaleTypes.FIT)
+    }
+
+    private fun navigation() {
         // Khởi tạo ActionBarDrawerToggle để quản lý sự kiện mở/đóng của Navigation Drawer
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, R.string.open, R.string.close
@@ -149,24 +151,80 @@ class MainActivity : AppCompatActivity() {
 
         // Đặt sự kiện click cho ImageButton "btn_menu"
         btnMenu.setOnClickListener {
-                drawerLayout.openDrawer(findViewById(R.id.nav_view))
+            drawerLayout.openDrawer(mNavigationView)
         }
 
-        val btnAccount = findViewById<ImageButton>(R.id.btn_account)
+
         btnAccount.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 
-        val viewmore = findViewById<TextView>(R.id.tv_viewmore)
-        viewmore.setOnClickListener {
-            val intent = Intent(this, DetailActivity::class.java)
-            startActivity(intent)
-        }
+
 
     }
 
+    private fun initUi() {
+        recyclerView = findViewById(R.id.recyclerView_dangchieu_main)
+        recyclerView2 = findViewById(R.id.recyclerView_sapchieu_main)
+        btnAccount = findViewById(R.id.btn_account)
+        drawerLayout = findViewById(R.id.drawer_layout)
+        btnMenu = findViewById(R.id.btn_menu)
+        mNavigationView = findViewById(R.id.nav_view)
+        imageSlider = findViewById(R.id.img_main_slider)
+        profile_username = mNavigationView.getHeaderView(0).findViewById(R.id.profile_username)
+        profile_image = mNavigationView.getHeaderView(0).findViewById(R.id.profile_image)
+        profile_email = mNavigationView.getHeaderView(0).findViewById(R.id.profile_email)
+    }
 
+    private fun showUserInformation() {
+        val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+        val userID = FirebaseAuth.getInstance().currentUser!!.uid
+        if (user != null) {
+            // Use fstore to access the Firestore database
+            db.collection("Users").document(userID).get()
+                .addOnSuccessListener { documentSnapshot ->
+                    if (documentSnapshot.exists()) {
+                        val username: String? = documentSnapshot.getString("Username")
+                        val email: String? = user.email
+                        val photoUrl: Uri? = user.photoUrl
+
+                        profile_email.text = email
+                        profile_username.text = username
+
+                        Glide.with(this)
+                            .load(photoUrl)
+                            .error(R.drawable.catavata)
+                            .into(profile_image)
+                    }
+                }
+                .addOnFailureListener { e ->
+                    // Handle failures
+                }
+        }
+    }
+
+
+    private fun getMovieItemFromDocument(document: DocumentSnapshot): MovieItem {
+        val id = document.id
+        val name = document.getString("name")
+        val duration = document.getString("duration")
+        val img = document.getString("img")
+        val castArray = document["cast"] as ArrayList<String>?
+        val cast = if (castArray?.size!! > 1) {
+            castArray.joinToString(", ")
+        } else {
+            castArray[0]
+        }
+        val director = document.getString("director")
+        val summary = document.getString("summary")
+        val trailer = document.getString("trailer")
+        val age = document.getString("age")
+        val price = document.getLong("price")
+        val genre = document.getString("genre")
+
+        return MovieItem(id, img!!, name!!, duration!!, age!!, cast, director!!, price!!, summary!!, trailer!!, genre!!)
+    }
 }
 
 
