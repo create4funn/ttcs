@@ -90,12 +90,14 @@ class MainActivity : AppCompatActivity() {
             for (document in snapshot!!) {
 
                 val startDateString = document.getString("start")
+                val endDateString = document.getString("end")
                 val startDate = SimpleDateFormat("dd/MM/yyyy").parse(startDateString)
+                val endDate = SimpleDateFormat("dd/MM/yyyy").parse(endDateString)
 
-                if(startDate <= curentDate){
+                if(startDate <= curentDate && curentDate <= endDate){
                     val movie = getMovieItemFromDocument(document)
                     listNowShowing.add(movie)
-                } else {
+                } else if(startDate > curentDate) {
                     // Phim sắp khởi chiếu
                     val movie = getMovieItemFromDocument(document)
                     listComingSoon.add(movie)

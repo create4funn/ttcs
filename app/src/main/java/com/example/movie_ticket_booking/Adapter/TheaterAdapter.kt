@@ -20,7 +20,7 @@ import com.example.movie_ticket_booking.Model.ShowtimeItem
 import com.example.movie_ticket_booking.Model.TheaterItem
 import com.example.movie_ticket_booking.R
 
-class TheaterAdapter(private val theatersList: List<TheaterItem>): RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() {
+class TheaterAdapter(private val theatersList: List<TheaterItem>, private val date: String): RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() {
 
 
 
@@ -28,7 +28,6 @@ class TheaterAdapter(private val theatersList: List<TheaterItem>): RecyclerView.
         val nameTheater = itemView.findViewById<TextView>(R.id.tv_chose_theater)
         val rvShowtime = itemView.findViewById<RecyclerView>(R.id.rv_hour)
         val price = itemView.findViewById<TextView>(R.id.tv_ticket_price)
-
 
     }
 
@@ -54,6 +53,8 @@ class TheaterAdapter(private val theatersList: List<TheaterItem>): RecyclerView.
             adapter = ShowtimeAdapter(currentItem.showtimeList){showtimeItem ->
                 AppData.selectedShowtime = showtimeItem
                 AppData.selectedTheater = currentItem
+                AppData.selectedDate = date
+                Log.d("abcc","${AppData.selectedDate} ${AppData.selectedShowtime} ${AppData.selectedTheater}")
                 val intent = Intent(context, SeatActivity::class.java)
                 startActivity(context,intent,null)
             }

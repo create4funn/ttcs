@@ -10,5 +10,5 @@ object AppData {
     var selectedTheater: TheaterItem? = null
     var selectedShowtime: ShowtimeItem? = null
     var selectedSeats: List<SeatItem>? = null
-
+    var selectedDate: String? = null
 }

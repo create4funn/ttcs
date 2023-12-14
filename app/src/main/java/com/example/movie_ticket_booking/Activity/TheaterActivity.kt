@@ -129,14 +129,15 @@ class TheaterActivity : AppCompatActivity() {
                                         }
                                     }
                                 }
+
                             }
 
-
-                            val theaterData =
-                                TheaterItem(theaterId, name!!, address!!, showtimeList)
-                            theaterList.add(theaterData)
-
-                            val adapter = TheaterAdapter(theaterList)
+                            if (showtimeList.isNotEmpty()) {
+                                val theaterData =
+                                    TheaterItem(theaterId, name!!, address!!, showtimeList)
+                                theaterList.add(theaterData)
+                            }
+                            val adapter = TheaterAdapter(theaterList, calendarTextView.text.toString())
                             rv_theater.adapter = adapter
                             adapter.notifyDataSetChanged()
 
@@ -152,7 +153,7 @@ class TheaterActivity : AppCompatActivity() {
         val currentTime = Calendar.getInstance()
 
         if (currentTime.get(Calendar.DAY_OF_MONTH) == day && currentTime.get(Calendar.MONTH) + 1 == month) {
-            Log.d("aaaa", "$day và $month")
+
             val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
             try {
@@ -166,6 +167,7 @@ class TheaterActivity : AppCompatActivity() {
             }
         }
         if (currentTime.get(Calendar.DAY_OF_MONTH) > day) {
+            Log.d("nnn", "false")
             return false
         }
 
