@@ -147,11 +147,11 @@ class TheaterActivity : AppCompatActivity() {
             }
     }
 
-    // Hàm kiểm tra nếu giờ hiện tại lớn hơn giờ cho trước
+
     fun checkShowtime(showtime: String, day: Int, month: Int): Boolean {
 
         val currentTime = Calendar.getInstance()
-
+        //check ngày tháng được chọn với ngày hiện tại
         if (currentTime.get(Calendar.DAY_OF_MONTH) == day && currentTime.get(Calendar.MONTH) + 1 == month) {
 
             val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
@@ -165,12 +165,9 @@ class TheaterActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        }
-        if (currentTime.get(Calendar.DAY_OF_MONTH) > day) {
-            Log.d("nnn", "false")
+        } else if (currentTime.get(Calendar.DAY_OF_MONTH) > day || currentTime.get((Calendar.MONTH)) + 1 > month) {
             return false
         }
-
 
         return true
     }

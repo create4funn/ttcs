@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movie_ticket_booking.Activity.AppData
 import com.example.movie_ticket_booking.Activity.DetailActivity
+import com.example.movie_ticket_booking.Activity.SeatActivity
 import com.example.movie_ticket_booking.Adapter.FoodAdapter
 import com.example.movie_ticket_booking.Adapter.MovieAdapter
 import com.example.movie_ticket_booking.Model.FoodItem
@@ -49,13 +50,16 @@ class FoodFragment : Fragment() {
                 val price = document.getLong("price")
 
 
-                val myData = FoodItem(id, name!!, des!!,  price!!,img!!)
+                val myData = FoodItem(id,name!!,des!!,price!!,img!!)
                 foodList.add(myData)
 
             }
-            val foodAdapter = FoodAdapter()
-            recyclerView.adapter = foodAdapter
-            foodAdapter.setData(foodList)
+            val seatActivity = activity as SeatActivity
+            // Gọi phương thức để cập nhật danh sách ghế được chọn
+            seatActivity.initFoodAdapter(recyclerView, foodList)
+//            val foodAdapter = FoodAdapter(SeatActivity())
+//            recyclerView.adapter = foodAdapter
+//            foodAdapter.setData(foodList)
         }
 
 

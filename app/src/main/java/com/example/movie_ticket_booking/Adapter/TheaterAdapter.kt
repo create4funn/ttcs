@@ -15,12 +15,14 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.movie_ticket_booking.Activity.AppData
 import com.example.movie_ticket_booking.Activity.SeatActivity
 import com.example.movie_ticket_booking.Activity.TheaterActivity
+import com.example.movie_ticket_booking.Model.Date
 import com.example.movie_ticket_booking.Model.MovieItem
 import com.example.movie_ticket_booking.Model.ShowtimeItem
 import com.example.movie_ticket_booking.Model.TheaterItem
 import com.example.movie_ticket_booking.R
 
 class TheaterAdapter(private val theatersList: List<TheaterItem>, private val date: String): RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() {
+
 
 
 
@@ -54,6 +56,7 @@ class TheaterAdapter(private val theatersList: List<TheaterItem>, private val da
                 AppData.selectedShowtime = showtimeItem
                 AppData.selectedTheater = currentItem
                 AppData.selectedDate = date
+
                 Log.d("abcc","${AppData.selectedDate} ${AppData.selectedShowtime} ${AppData.selectedTheater}")
                 val intent = Intent(context, SeatActivity::class.java)
                 startActivity(context,intent,null)

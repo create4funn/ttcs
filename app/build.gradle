@@ -81,4 +81,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.16.0'
     // splash đầu app
     implementation 'com.airbnb.android:lottie:3.4.1'
+
+
 }

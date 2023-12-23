@@ -1,62 +1,152 @@
 package com.example.movie_ticket_booking.Activity
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
-import android.view.View
+import android.util.Log
 import android.widget.Button
-import android.widget.GridLayout
-import android.widget.ImageView
+import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import com.example.movie_ticket_booking.Adapter.FoodAdapter
 import com.example.movie_ticket_booking.Fragment.FoodFragment
 import com.example.movie_ticket_booking.Fragment.SeatFragment
+import com.example.movie_ticket_booking.Interface.FoodItemClickListener
+import com.example.movie_ticket_booking.Model.FoodItem
 import com.example.movie_ticket_booking.R
+import com.google.firebase.firestore.FirebaseFirestore
+import java.text.NumberFormat
+import java.util.*
 
-class SeatActivity : AppCompatActivity() {
-    private lateinit var seatLayout: GridLayout
-    private lateinit var reserveButton: Button
-    @SuppressLint("MissingInflatedId")
+class SeatActivity : AppCompatActivity(), FoodItemClickListener {
+    private lateinit var btnBack: ImageButton
+    private lateinit var tv_actionbar: TextView
+    private lateinit var btnBook: Button
+    private lateinit var selectedSeat: TextView
+    private lateinit var selectedFood: TextView
+    private lateinit var price: TextView
+    private lateinit var movieName: TextView
+    private var ticketPrice: Long = 0
+    private val selectedSeatsList = mutableListOf<String>()
+    private var check: Boolean = false
+    private var total: Long = 0
+    private lateinit var db: FirebaseFirestore
+    private val theater = AppData.selectedTheater
+    private val showtime = AppData.selectedShowtime
+    private val date = AppData.selectedDate.toString()
+    private val movie = AppData.selectedMovie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movieseat)
 
-        val btnBack = findViewById<ImageView>(R.id.btn_back_seat)
+        initView()
         btnBack.setOnClickListener {
             finish()
         }
-        val movie = AppData.selectedMovie
-        val tv_actionbar = findViewById<TextView>(R.id.tv_actionBar)
-        tv_actionbar.text = movie?.name
+
+
+
+
         replaceFragment(SeatFragment())
-        val btnbook = findViewById<Button>(R.id.btn_seat_book)
-        btnbook.setOnClickListener {
+
+        btnBook.setOnClickListener {
 
             val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_layout_seat)
 
-            if (currentFragment is FoodFragment) {
+            if (currentFragment is SeatFragment && check) {
+                replaceFragment(FoodFragment())
+            } else if (currentFragment is FoodFragment) {
                 val intent = Intent(this, PaymentActivity::class.java)
                 startActivity(intent)
-            } else {
-
-                replaceFragment(FoodFragment())
+            } else{
+                Toast.makeText(this, "bạn chua chọn ghế", Toast.LENGTH_LONG).show()
             }
+
         }
+
     }
 
+    private fun initView(){
+        btnBack = findViewById(R.id.btn_back_seat)
+        tv_actionbar = findViewById(R.id.tv_actionBar)
+        btnBook = findViewById(R.id.btn_seat_book)
+        selectedSeat = findViewById(R.id.tv_seat_name)
+        price = findViewById(R.id.tv_seat_total)
+        movieName = findViewById(R.id.tv_seat_moviename)
+        selectedFood = findViewById(R.id.tv_food_name)
+
+        tv_actionbar.text = movie?.name
+        movieName.text = movie?.name
+        ticketPrice = movie?.price!!
+    }
     fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.frame_layout_seat, fragment).commit()
     }
 
 
+    fun updateSelectedSeat(selectedSeats: List<String>){
+        if (selectedSeats.isNotEmpty()){
+            check = true
+        }
+        // Cập nhật danh sách và hiển thị lên TextView
+        selectedSeatsList.clear()
+        selectedSeatsList.addAll(selectedSeats)
+        selectedSeat.text = "${selectedSeats.joinToString(",")}"
 
+        total = selectedSeats.size * ticketPrice
+        price.text = "${formatCurrency(total)}"
 
+    }
 
+    override fun onFoodItemClicked(selectedFoods: List<String>, foodPrice: Int) {
+//        updateSelectedFood(selectedFood, foodPrice)
 
+        selectedFood.text = if (selectedFoods.isNotEmpty()) {
+            "+" + selectedFoods.joinToString(" +")
+        } else {
+            ""
+        }
 
+        total += foodPrice
+        price.text = "${formatCurrency(total)}"
 
+    }
+
+    fun formatCurrency(amount: Long): String {
+        val formatter = NumberFormat.getInstance(Locale("vi", "VN"))
+        return formatter.format(amount) + "đ"
+    }
+    fun initFoodAdapter(recyclerView : RecyclerView, foodList: List<FoodItem>){
+        val foodAdapter = FoodAdapter(this,this)
+        recyclerView.adapter = foodAdapter
+        foodAdapter.setData(foodList)
+    }
+
+//    fun getReservedSeats() : MutableList<String>{
+//        val seatList = mutableListOf<String>()
+//
+//        db = FirebaseFirestore.getInstance()
+//        db.collection("tickets")
+//            .whereEqualTo("movie_name", movie?.name)
+//            .whereEqualTo("theater_name", theater?.theaterName)
+//            .whereEqualTo("showtime", showtime?.showtime)
+////            .whereEqualTo("date", date)
+//            .get()
+//            .addOnSuccessListener { querySnapshot ->
+//                for (document in querySnapshot) {
+//                    // Lấy giá trị của trường seat và thêm vào list
+//                    val seat = document.getString("seat")
+//                    if (seat != null) {
+//                        seatList.add(seat)
+//                    }
+//                }
+//                Log.d("acb","${seatList.size} ${movie?.name} ${theater?.theaterName} ${showtime?.showtime} $date")
+//            }
+//            return seatList
+//
+//    }
 
 
 //    private fun initializeSeatLayout() {

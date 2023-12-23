@@ -26,7 +26,7 @@
             android:id="@+id/textViewName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="20dp"
             android:textColor="@android:color/white" />
 
         <TextView
@@ -41,37 +41,45 @@
             android:orientation="horizontal"
             android:layout_gravity="center_vertical">
 
-            <Button
+            <ImageButton
                 android:id="@+id/btnDecrease"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:backgroundTint="#f37636"
-                android:textAlignment="center"
-                android:text="-" />
+                android:src="@drawable/ic_sub"
+                />
 
             <TextView
                 android:id="@+id/textViewQuantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:textColor="@color/white"
-                android:text="1" />
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:text="0"
+                android:layout_gravity="center"
+                />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btnIncrease"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:backgroundTint="#f37636"
-                android:textAlignment="center"
-                android:text="+" />
+                android:src="@drawable/ic_add" />
+
+            <TextView
+                android:id="@+id/textViewPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="@android:color/white"
+                android:layout_marginLeft="50dp"
+                android:layout_gravity="center"
+                />
         </LinearLayout>
     </LinearLayout>
-    <TextView
-        android:id="@+id/textViewPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="@android:color/white"
-        android:layout_gravity="center_vertical" />
+
+
 </LinearLayout>
