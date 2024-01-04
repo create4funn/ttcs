@@ -41,7 +41,6 @@ class SignUpActivity : AppCompatActivity() {
                             val userMap = hashMapOf(
                                 "Username" to username,
                                 "Email" to email,
-                                "Password" to password
                             )
                             fstore.collection("Users").document(userID).set(userMap)
 

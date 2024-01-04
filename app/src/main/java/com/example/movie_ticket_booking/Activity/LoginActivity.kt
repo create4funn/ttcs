@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import com.example.movie_ticket_booking.R
 import com.example.movie_ticket_booking.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginActivity : AppCompatActivity() {
 
@@ -31,17 +32,35 @@ class LoginActivity : AppCompatActivity() {
 
             if (email.isNotEmpty() && password.isNotEmpty()){
 
-                firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener{
-                    if (it.isSuccessful){
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                firebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                        } else {
+                            val exception = task.exception
+                            if (exception != null) {
+                                when {
+                                    exception.localizedMessage.contains("invalid_email") ->
+                                        Toast.makeText(this, "Invalid email address", Toast.LENGTH_SHORT).show()
+                                    exception.localizedMessage.contains("user_not_found") ||
+                                            exception.localizedMessage.contains("wrong_password") ->
+                                        Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show()
+                                    else ->
+                                        Toast.makeText(this, "Authentication failed. Try again later.", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
                     }
-                }
+
             } else {
                 Toast.makeText(this, "Fields cannot be empty", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        binding.signupRedirect.setOnClickListener {
+            val signupIntent = Intent(this, SignUpActivity::class.java)
+            startActivity(signupIntent)
         }
 
         binding.forgotPassword.setOnClickListener {
@@ -65,10 +84,7 @@ class LoginActivity : AppCompatActivity() {
             dialog.show()
         }
 
-        binding.signupRedirect.setOnClickListener {
-            val signupIntent = Intent(this, SignUpActivity::class.java)
-            startActivity(signupIntent)
-        }
+
     }
 
     //Outside onCreate
@@ -82,10 +98,9 @@ class LoginActivity : AppCompatActivity() {
         firebaseAuth.sendPasswordResetEmail(email.text.toString())
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Check your email", Toast.LENGTH_SHORT).show()
-                }else{
-                    Toast.makeText(this, "Try again", Toast.LENGTH_SHORT).show()
-
+                    Toast.makeText(this, "Password reset email sent. Check your email.", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Failed to send password reset email. Try again.", Toast.LENGTH_SHORT).show()
                 }
             }
     }

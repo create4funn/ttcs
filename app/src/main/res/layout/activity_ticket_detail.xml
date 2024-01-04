@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D0C7C7"
+    android:orientation="vertical"
+    tools:context=".Activity.TicketDetailActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#E61313"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/ticketDetail_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:backgroundTint="#E61313"
+            android:contentDescription="Quay về trang trước"
+            app:srcCompat="@drawable/back_icon3" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginLeft="20dp"
+            android:text="Payment"
+            android:textColor="@color/white"
+            android:textSize="25dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/ticketDetail_img"
+            android:layout_width="120dp"
+            android:layout_height="160dp"
+            tools:srcCompat="@tools:sample/avatars"
+            android:layout_marginLeft="10dp"
+            android:scaleType="centerCrop"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            android:weightSum="10"
+            >
+
+            <TextView
+                android:id="@+id/ticketDetail_movie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ten phim"
+                android:textColor="@color/black"
+                android:textSize="21dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/ticketDetail_datetime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ngay"
+                android:textColor="@color/black"
+                android:textSize="19dp" />
+
+
+            <TextView
+                android:id="@+id/ticketDetail_theater"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CGV"
+                android:textColor="@color/black"
+                android:textSize="19dp"
+                />
+
+            <TextView
+                android:id="@+id/ticketDetail_seat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ghế: "
+                android:textColor="@color/black"
+                android:textSize="19dp"
+                />
+
+            <TextView
+                android:id="@+id/ticketDetail_food"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="19dp"
+                />
+
+            <TextView
+                android:id="@+id/ticketDetail_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tổng: "
+                android:textColor="#ED1313"
+                android:textSize="19dp"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider8"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="?android:attr/listDivider"
+        android:backgroundTint="@color/black"
+        android:layout_margin="40dp"/>
+    
+    <ImageView
+        android:id="@+id/ticketDetail_qrcode"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -17,7 +17,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/btn_back"
+            android:id="@+id/btn_payment_back"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:backgroundTint="#E61313"
@@ -91,7 +91,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:contentDescription="á"
                 android:text="CGV"
                 android:textColor="@color/black"
                 android:textSize="17dp" />
@@ -110,7 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="food order"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="17dp" />
 

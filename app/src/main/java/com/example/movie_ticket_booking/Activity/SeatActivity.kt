@@ -30,6 +30,7 @@ class SeatActivity : AppCompatActivity(), FoodItemClickListener {
     private lateinit var movieName: TextView
     private var ticketPrice: Long = 0
     private val selectedSeatsList = mutableListOf<String>()
+    private val selectedFoodsList = mutableListOf<String>()
     private var check: Boolean = false
     private var total: Long = 0
     private lateinit var db: FirebaseFirestore
@@ -59,12 +60,17 @@ class SeatActivity : AppCompatActivity(), FoodItemClickListener {
                 replaceFragment(FoodFragment())
             } else if (currentFragment is FoodFragment) {
                 val intent = Intent(this, PaymentActivity::class.java)
+                intent.putExtra("total", total)
+                intent.putStringArrayListExtra("seatList", ArrayList(selectedSeatsList))
+                intent.putStringArrayListExtra("foodList", ArrayList(selectedFoodsList))
                 startActivity(intent)
+                finish()
             } else{
                 Toast.makeText(this, "bạn chua chọn ghế", Toast.LENGTH_LONG).show()
             }
 
         }
+
 
     }
 
@@ -102,7 +108,8 @@ class SeatActivity : AppCompatActivity(), FoodItemClickListener {
 
     override fun onFoodItemClicked(selectedFoods: List<String>, foodPrice: Int) {
 //        updateSelectedFood(selectedFood, foodPrice)
-
+        selectedFoodsList.clear()
+        selectedFoodsList.addAll(selectedFoods)
         selectedFood.text = if (selectedFoods.isNotEmpty()) {
             "+" + selectedFoods.joinToString(" +")
         } else {

@@ -6,9 +6,11 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -151,14 +153,25 @@ class MainActivity : AppCompatActivity() {
         // Hiển thị Toggle
         toggle.syncState()
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         // Đặt sự kiện click cho ImageButton "btn_menu"
         btnMenu.setOnClickListener {
             drawerLayout.openDrawer(mNavigationView)
         }
 
-
+        mNavigationView.setNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.nav_ticket -> {
+                    val intent = Intent(this, TicketActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
         btnAccount.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, AccountActivity::class.java)
             startActivity(intent)
         }
 

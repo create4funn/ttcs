@@ -48,6 +48,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.0.2'
     implementation 'com.google.firebase:firebase-firestore-ktx:24.1.1'
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.3'
+    implementation fileTree(dir: 'D:\\sdk zalopay', include: ['*.aar', '*.jar'], exclude: [])
     // implementation 'com.google.firebase:firebase-database-ktx:20.0.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
@@ -82,5 +83,9 @@ dependencies {
     // splash đầu app
     implementation 'com.airbnb.android:lottie:3.4.1'
 
+    implementation 'com.squareup.okhttp3:okhttp:4.6.0'
+
+    implementation 'com.google.zxing:core:3.4.0'
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
 
 }

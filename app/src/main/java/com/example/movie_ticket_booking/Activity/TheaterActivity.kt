@@ -119,7 +119,7 @@ class TheaterActivity : AppCompatActivity() {
 
                                     // Lặp qua danh sách các giá trị
                                     for (value in values) {
-                                        if (checkShowtime(value, day, month)) {
+                                        if (checkShowtime(value, day, month, year)) {
                                             // Lấy tên field tương ứng với giá trị
                                             val field =
                                                 data.keys.first { data[it].toString() == value }
@@ -148,7 +148,7 @@ class TheaterActivity : AppCompatActivity() {
     }
 
 
-    fun checkShowtime(showtime: String, day: Int, month: Int): Boolean {
+    fun checkShowtime(showtime: String, day: Int, month: Int, year: Int): Boolean {
 
         val currentTime = Calendar.getInstance()
         //check ngày tháng được chọn với ngày hiện tại
@@ -165,7 +165,8 @@ class TheaterActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        } else if (currentTime.get(Calendar.DAY_OF_MONTH) > day || currentTime.get((Calendar.MONTH)) + 1 > month) {
+        } else if ((currentTime.get(Calendar.DAY_OF_MONTH) > day || currentTime.get((Calendar.MONTH)) + 1 > month)
+            && currentTime.get((Calendar.YEAR)) == year) {
             return false
         }
 

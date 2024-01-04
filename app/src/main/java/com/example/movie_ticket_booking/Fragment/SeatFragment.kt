@@ -55,19 +55,14 @@ class SeatFragment : Fragment() {
             .addSnapshotListener { value, error ->
                 for (document in value!!) {
                     // Lấy giá trị của trường seat và thêm vào list
-                    val seat = document.getString("seat")
-//                    test = "$seat"
-                    if (seat != null) {
-                        seatList.add(seat)
-
-                    }
+//                    val seat = document.getString("seat")
+                    val seat = document["seat"] as ArrayList<String>?
+                    Log.d("acc","test")
+                    seatList.addAll(seat!!)
 
                 }
                 initSeat()
-                Log.d(
-                    "acb",
-                    "${seatList.size} ${movie?.name} ${theater?.theaterName} ${showtime?.showtime} $date"
-                )
+
             }
 
 

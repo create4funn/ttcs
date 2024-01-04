@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.UnwatchedFragment">
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fm_unwatched"
         android:layout_width="match_parent"
