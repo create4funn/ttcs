@@ -50,7 +50,7 @@ class SeatActivity : AppCompatActivity(), FoodItemClickListener {
 
 
 
-        replaceFragment(SeatFragment())
+        replaceFragment(SeatFragment(this))
 
         btnBook.setOnClickListener {
 

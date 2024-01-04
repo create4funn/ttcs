@@ -78,7 +78,7 @@ class TheaterActivity : AppCompatActivity() {
         year = date.get(Calendar.YEAR)
         month = date.get(Calendar.MONTH) + 1
         day = date.get(Calendar.DAY_OF_MONTH)
-        calendarTextView.text = "$day/$month/$year "
+        calendarTextView.text = "$day/$month/$year"
     }
 
 

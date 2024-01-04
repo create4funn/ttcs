@@ -1,5 +1,6 @@
 package com.example.movie_ticket_booking.Fragment
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.GridLayout
+import android.widget.Toast
 import androidx.core.view.setMargins
 import com.example.movie_ticket_booking.Activity.AppData
 import com.example.movie_ticket_booking.Activity.SeatActivity
@@ -17,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.math.log
 
 
-class SeatFragment : Fragment() {
+class SeatFragment(private val context: Context) : Fragment() {
 
     private val selectedSeats = mutableListOf<String>()
     private val seatList = mutableListOf<String>()
@@ -41,6 +43,7 @@ class SeatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         seatLayout = view.findViewById(R.id.gv_seatLayout)
 
+//        Log.d("nnn","test")
         getReservedSeats()
 
     }
@@ -57,12 +60,11 @@ class SeatFragment : Fragment() {
                     // Lấy giá trị của trường seat và thêm vào list
 //                    val seat = document.getString("seat")
                     val seat = document["seat"] as ArrayList<String>?
-                    Log.d("acc","test")
                     seatList.addAll(seat!!)
 
                 }
                 initSeat()
-
+                Toast.makeText(context, "test", Toast.LENGTH_LONG).show()
             }
 
 
