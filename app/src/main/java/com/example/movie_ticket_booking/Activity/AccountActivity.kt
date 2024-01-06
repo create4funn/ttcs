@@ -16,10 +16,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import org.json.JSONObject
-import vn.zalopay.sdk.ZaloPayError
-import vn.zalopay.sdk.ZaloPaySDK
-import vn.zalopay.sdk.listeners.PayOrderListener
 
 class AccountActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAccountBinding
@@ -39,6 +35,9 @@ class AccountActivity : AppCompatActivity() {
         initUi()
         showUserInformation()
 
+        binding.btnBackAccount.setOnClickListener {
+            finish()
+        }
 
         binding.acChangepassword.setOnClickListener {
             val builder = AlertDialog.Builder(this)

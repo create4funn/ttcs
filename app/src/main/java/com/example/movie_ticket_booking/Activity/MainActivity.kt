@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var btnMenu:ImageButton
     private lateinit var btnAccount:ImageButton
-
+    private val firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var mNavigationView: NavigationView
     private var db = FirebaseFirestore.getInstance()
     @SuppressLint("MissingInflatedId")
@@ -165,10 +165,21 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_ticket -> {
                     val intent = Intent(this, TicketActivity::class.java)
                     startActivity(intent)
-                    true
+
                 }
-                else -> false
+                R.id.nav_account -> {
+                    val intent = Intent(this, AccountActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.nav_logout -> {
+                    firebaseAuth.signOut()
+                    Toast.makeText(this, "Logout successful", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this,LoginActivity::class.java))
+                    finish()
+                }
+
             }
+            false
         }
         btnAccount.setOnClickListener {
             val intent = Intent(this, AccountActivity::class.java)
@@ -207,10 +218,10 @@ class MainActivity : AppCompatActivity() {
                         profile_email.text = email
                         profile_username.text = username
 
-                        Glide.with(this)
-                            .load(photoUrl)
-                            .error(R.drawable.catavata)
-                            .into(profile_image)
+                      //  Glide.with(this)
+                       //     .load(photoUrl)
+                       //     .error(R.drawable.catavata)
+                        //    .into(profile_image)
                     }
                 }
                 .addOnFailureListener { e ->

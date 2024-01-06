@@ -27,14 +27,15 @@
                 android:src="@drawable/logo2"
                 android:padding="5dp"/>
         </androidx.cardview.widget.CardView>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="CGV "
             android:textColor="#E12C2C"
-            android:textSize="22dp"
-            android:layout_gravity="center_vertical"
-            />
+            android:textSize="22dp" />
+
         <TextView
             android:id="@+id/tv_chose_theater"
             android:layout_width="wrap_content"
@@ -43,12 +44,31 @@
             android:textColor="#FFFFFF"
             android:textSize="20dp"
             android:layout_marginTop="-1dp"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tv_distant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#2196F3"
+            android:textSize="18dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            />
+            android:text="km"
+            android:layout_marginLeft="5dp"
+            android:textColor="#2196F3"
+            android:textSize="16dp" />
+
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginBottom="10dp">

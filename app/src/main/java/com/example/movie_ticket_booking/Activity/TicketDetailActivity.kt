@@ -2,9 +2,11 @@ package com.example.movie_ticket_booking.Activity
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -27,7 +29,7 @@ class TicketDetailActivity : AppCompatActivity() {
     private lateinit var food:TextView
     private lateinit var total:TextView
     private lateinit var btnBack: ImageButton
-
+    private lateinit var mapbtn: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ticket_detail)
@@ -35,6 +37,7 @@ class TicketDetailActivity : AppCompatActivity() {
         val ticket = AppData.selectedTicket
 
         initial()
+
         val check = intent.getBooleanExtra("check",false)
         if(check){
             try {
@@ -56,16 +59,25 @@ class TicketDetailActivity : AppCompatActivity() {
 
         Picasso.get().load(ticket?.imgMovie).into(img)
         movieName.text = ticket?.movie_name
-        theaterName.text = ticket?.theater_name
+        theaterName.text = "CGV "+ticket?.theater_name
         time.text = "${ticket?.hour}, ${ticket?.date}"
-        seat.text = ticket?.seat
+        seat.text = "Seats: "+ticket?.seat
         val formatter = NumberFormat.getInstance(Locale("vi", "VN"))
         total.text = "Total: "+formatter.format(ticket?.total).toString() +"đ"
         food.text = ticket?.food
 
+
         btnBack.setOnClickListener {
             finish()
         }
+
+        mapbtn.setOnClickListener {
+            val uri = Uri.parse("https://www.google.com/maps/dir/CGV " + ticket?.theater_name +"/")
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+        }
+
     }
 
     private fun initial() {
@@ -78,5 +90,6 @@ class TicketDetailActivity : AppCompatActivity() {
         total = findViewById(R.id.ticketDetail_total)
         qrCode = findViewById(R.id.ticketDetail_qrcode)
         btnBack = findViewById(R.id.ticketDetail_back)
+        mapbtn = findViewById(R.id.mapbtn)
     }
 }

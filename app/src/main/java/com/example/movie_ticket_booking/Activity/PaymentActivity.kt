@@ -3,6 +3,7 @@ package com.example.movie_ticket_booking.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Environment
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.view.View
@@ -19,7 +20,7 @@ import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.squareup.picasso.Picasso
 import org.json.JSONObject
-import vn.zalopay.sdk.Environment
+
 import vn.zalopay.sdk.ZaloPayError
 import vn.zalopay.sdk.ZaloPaySDK
 import vn.zalopay.sdk.listeners.PayOrderListener
@@ -80,7 +81,7 @@ class PaymentActivity : AppCompatActivity() {
         val policy = ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
 
-        ZaloPaySDK.init(AppInfo.APP_ID, Environment.SANDBOX)
+        ZaloPaySDK.init(AppInfo.APP_ID, vn.zalopay.sdk.Environment.SANDBOX)
 
 
         btnPay.setOnClickListener{
@@ -111,7 +112,6 @@ class PaymentActivity : AppCompatActivity() {
                                 ).show()
                                     //val data = "${firebaseAuth.currentUser?.uid}|${movie?.name}|${theater?.theaterName}|$"
                                     //genQrCode(data)
-
                                 val data = hashMapOf(
                                     "img" to "${movie?.img}",
                                     "movie_name" to "${movie?.name}",
@@ -121,38 +121,30 @@ class PaymentActivity : AppCompatActivity() {
                                     "date" to "$sellectedDate",
                                     "showtime" to "${selectedShowtime?.showtime}",
                                     "total" to "$totalPut",
-                                    "user_id" to "${firebaseAuth.currentUser?.uid}"
-
+//                                    "user_id" to "${firebaseAuth.currentUser?.uid}"
                                 )
-                                db.collection("tickets").add(data)
-                                    .addOnCompleteListener {
+                                db.collection("Users").document(firebaseAuth.currentUser!!.uid).collection("ticket")
+                                    .add(data).addOnCompleteListener {
                                         val intent = Intent(this@PaymentActivity, TicketActivity::class.java)
                                         finish()
                                         startActivity(intent)
-
-
                                     }
-
                             }
-
                             override fun onPaymentCanceled(
                                 zpTransToken: String,
                                 appTransID: String
                             ) {
-
                                 Toast.makeText(
                                     this@PaymentActivity,
                                     "Thanh toán bị hủy",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
-
                             override fun onPaymentError(
                                 zaloPayError: ZaloPayError,
                                 zpTransToken: String,
                                 appTransID: String
                             ) {
-
                                 Toast.makeText(
                                     this@PaymentActivity,
                                     "Thanh toán thất bại",
@@ -165,9 +157,7 @@ class PaymentActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
-
     }
-
     private fun initView() {
         img = findViewById(R.id.payment_img)
         name = findViewById(R.id.payment_tv_tenphim)
@@ -180,13 +170,10 @@ class PaymentActivity : AppCompatActivity() {
         btnBack = findViewById(R.id.btn_payment_back)
         btnPay = findViewById(R.id.payment_button)
     }
-
-
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         ZaloPaySDK.getInstance().onResult(intent)
     }
-
     private fun genQrCode(data: String){
         try {
             // Tạo mã QR code từ dữ liệu
@@ -194,7 +181,6 @@ class PaymentActivity : AppCompatActivity() {
             val bitMatrix = multiFormatWriter.encode(data, BarcodeFormat.QR_CODE, 120, 120)
             val barcodeEncoder = BarcodeEncoder()
             val bitmap: Bitmap = barcodeEncoder.createBitmap(bitMatrix)
-
 //            // Hiển thị mã QR code trong ImageView
 //            imageView.setImageBitmap(bitmap)
 

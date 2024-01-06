@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import com.example.movie_ticket_booking.Model.TicketItem
 import com.example.movie_ticket_booking.R
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,9 +25,14 @@ import kotlin.collections.ArrayList
 
 class TicketActivity : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
+    private val firebaseAuth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.my_ticket)
+        val btnBack = findViewById<ImageButton>(R.id.ticket_btn_back)
+        btnBack.setOnClickListener {
+            finish()
+        }
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout_ticket)
         val viewPager = findViewById<ViewPager2>(R.id.viewpager_ticket)
 
@@ -56,7 +63,7 @@ class TicketActivity : AppCompatActivity() {
         // Lấy ngày giờ hiện tại
         val currentDate = Calendar.getInstance().time
 
-        db.collection("tickets").whereEqualTo("user_id", uid).addSnapshotListener { value, error ->
+        db.collection("Users").document(firebaseAuth.currentUser!!.uid).collection("ticket").addSnapshotListener { value, error ->
             if (error != null) {
                 // Xử lý lỗi nếu có
                 return@addSnapshotListener
@@ -110,9 +117,6 @@ class TicketActivity : AppCompatActivity() {
             Log.d("aac","${listTicket.size}")
 
         }
-
-
     }
-
 
 }

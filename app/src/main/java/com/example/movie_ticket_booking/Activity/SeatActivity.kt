@@ -41,21 +41,15 @@ class SeatActivity : AppCompatActivity(), FoodItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movieseat)
-
         initView()
         btnBack.setOnClickListener {
             finish()
         }
-
-
-
-
         replaceFragment(SeatFragment(this))
 
         btnBook.setOnClickListener {
 
             val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_layout_seat)
-
             if (currentFragment is SeatFragment && check) {
                 replaceFragment(FoodFragment())
             } else if (currentFragment is FoodFragment) {
@@ -68,9 +62,7 @@ class SeatActivity : AppCompatActivity(), FoodItemClickListener {
             } else{
                 Toast.makeText(this, "bạn chua chọn ghế", Toast.LENGTH_LONG).show()
             }
-
         }
-
 
     }
 

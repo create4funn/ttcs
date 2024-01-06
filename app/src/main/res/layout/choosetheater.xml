@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="#1C1A29"
     tools:context=".Activity.TheaterActivity">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#2F2C44"
@@ -16,6 +16,7 @@
         <ImageButton
             android:id="@+id/btn_back_theater"
             android:layout_width="60dp"
+            android:gravity="left"
             android:layout_height="match_parent"
             android:backgroundTint="#2F2C44"
             android:contentDescription="Quay về trang trước"
@@ -25,17 +26,25 @@
             android:id="@+id/tv_actionBar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:gravity="center|left"
+            android:layout_marginLeft="70dp"
+            android:gravity="center"
             android:textSize="25dp"
             android:text=""
-            android:textColor="@color/white"
-            />
-    </LinearLayout>
-    <!--    <com.github.jhonnyx2012.horizontalpicker.HorizontalPicker-->
-    <!--        android:id="@+id/datePicker"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"/>-->
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/locatxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableRight="@drawable/baseline_location_on_24"
+            android:gravity="right"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="16dp"/>
+
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -74,11 +83,4 @@
         android:id="@+id/rv_theater"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-<!--    <Button-->
-<!--        android:id="@+id/btn_next"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="next"-->
-<!--        android:layout_marginTop="250dp"-->
-<!--        android:layout_gravity="center|bottom"/>-->
 </LinearLayout>
