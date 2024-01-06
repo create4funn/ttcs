@@ -56,9 +56,9 @@ class TicketDetailActivity : AppCompatActivity() {
 
         Picasso.get().load(ticket?.imgMovie).into(img)
         movieName.text = ticket?.movie_name
-        theaterName.text = ticket?.theater_name
+        theaterName.text = "CGV "+ticket?.theater_name
         time.text = "${ticket?.hour}, ${ticket?.date}"
-        seat.text = ticket?.seat
+        seat.text = "Seats: "+ticket?.seat
         val formatter = NumberFormat.getInstance(Locale("vi", "VN"))
         total.text = "Total: "+formatter.format(ticket?.total).toString() +"đ"
         food.text = ticket?.food

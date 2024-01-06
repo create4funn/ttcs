@@ -64,7 +64,7 @@ class SeatFragment(private val context: Context) : Fragment() {
 
                 }
                 initSeat()
-                Toast.makeText(context, "test", Toast.LENGTH_LONG).show()
+
             }
 
 

@@ -39,6 +39,9 @@ class AccountActivity : AppCompatActivity() {
         initUi()
         showUserInformation()
 
+        binding.btnBackAccount.setOnClickListener {
+            finish()
+        }
 
         binding.acChangepassword.setOnClickListener {
             val builder = AlertDialog.Builder(this)
