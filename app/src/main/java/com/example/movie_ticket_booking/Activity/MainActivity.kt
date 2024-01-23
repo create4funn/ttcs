@@ -218,10 +218,10 @@ class MainActivity : AppCompatActivity() {
                         profile_email.text = email
                         profile_username.text = username
 
-                        Glide.with(this)
-                            .load(photoUrl)
-                            .error(R.drawable.catavata)
-                            .into(profile_image)
+                      //  Glide.with(this)
+                       //     .load(photoUrl)
+                       //     .error(R.drawable.catavata)
+                        //    .into(profile_image)
                     }
                 }
                 .addOnFailureListener { e ->

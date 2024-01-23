@@ -68,7 +68,7 @@ class TheaterActivity : AppCompatActivity(), OnMapReadyCallback {
 
         initView()
         setupCalendar()
-//        fetch()
+        fetch()
 
     }
 
@@ -96,13 +96,14 @@ class TheaterActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         locatv.setOnClickListener{
-            locatv.setImageResource(R.drawable.baseline_location_on_24)
+
             if (ContextCompat.checkSelfPermission(
                     this,
                     android.Manifest.permission.ACCESS_FINE_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 // Nếu có quyền, lấy vị trí ngay lập tức
+
                 getLastLocation()
                 fetch()
             } else {
@@ -154,7 +155,7 @@ class TheaterActivity : AppCompatActivity(), OnMapReadyCallback {
         if (requestCode == REQUEST_LOCATION_PERMISSION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Nếu người dùng cấp quyền, lấy vị trí
-
+                locatv.setImageResource(R.drawable.baseline_location_on_24)
 
                 check = true
                 getLastLocation()

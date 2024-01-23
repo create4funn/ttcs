@@ -86,7 +86,7 @@ class SeatActivity : AppCompatActivity(), FoodItemClickListener {
                     intent.putExtra("total", total)
                     intent.putStringArrayListExtra("seatList", ArrayList(selectedSeatsList))
                     intent.putStringArrayListExtra("foodList", ArrayList(selectedFoodsList))
-
+                    finish()
                     startActivity(intent)
 
 
