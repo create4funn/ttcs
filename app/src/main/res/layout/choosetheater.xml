@@ -23,13 +23,24 @@
 
         <TextView
             android:id="@+id/tv_actionBar"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
             android:gravity="center|left"
-            android:textSize="25dp"
+            android:textSize="23dp"
             android:text=""
             android:textColor="@color/white"
+            />
+
+        <ImageButton
+            android:id="@+id/locatxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/baseline_location_off_24"
+            android:gravity="right"
+            android:background="@null"
+            android:layout_gravity="center_vertical"
             />
     </LinearLayout>
     <!--    <com.github.jhonnyx2012.horizontalpicker.HorizontalPicker-->

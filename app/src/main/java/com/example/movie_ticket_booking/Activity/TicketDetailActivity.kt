@@ -2,13 +2,16 @@ package com.example.movie_ticket_booking.Activity
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.movie_ticket_booking.R
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
@@ -27,7 +30,11 @@ class TicketDetailActivity : AppCompatActivity() {
     private lateinit var food:TextView
     private lateinit var total:TextView
     private lateinit var btnBack: ImageButton
+    private lateinit var mapbtn: Button
+    private var latt: Double = 0.0
+    private var long: Double = 0.0
 
+    private val db = FirebaseFirestore.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ticket_detail)
@@ -35,6 +42,16 @@ class TicketDetailActivity : AppCompatActivity() {
         val ticket = AppData.selectedTicket
 
         initial()
+
+        db.collection("theaters")
+            .whereEqualTo("theater_name",ticket?.theater_name).get().addOnSuccessListener {
+                for (document in it){
+                    val map = document.getGeoPoint("map")
+                    latt = map!!.latitude
+                    long = map.longitude
+                }
+
+            }
         val check = intent.getBooleanExtra("check",false)
         if(check){
             try {
@@ -63,9 +80,22 @@ class TicketDetailActivity : AppCompatActivity() {
         total.text = "Total: "+formatter.format(ticket?.total).toString() +"đ"
         food.text = ticket?.food
 
+
         btnBack.setOnClickListener {
             finish()
         }
+
+        mapbtn.setOnClickListener {
+
+            val uri = Uri.parse("geo:$latt,$long?q=CGV ${ticket?.theater_name}")
+            val mapIntent = Intent(Intent.ACTION_VIEW, uri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+//            val uri = Uri.parse("https://www.google.com/maps/place/CGV " + ticket?.theater_name +"/")
+//            val intent = Intent(Intent.ACTION_VIEW, uri)
+//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(mapIntent)
+        }
+
     }
 
     private fun initial() {
@@ -78,5 +108,6 @@ class TicketDetailActivity : AppCompatActivity() {
         total = findViewById(R.id.ticketDetail_total)
         qrCode = findViewById(R.id.ticketDetail_qrcode)
         btnBack = findViewById(R.id.ticketDetail_back)
+        mapbtn = findViewById(R.id.mapbtn)
     }
 }

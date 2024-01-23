@@ -15,15 +15,17 @@ import androidx.core.view.setMargins
 import com.example.movie_ticket_booking.Activity.AppData
 import com.example.movie_ticket_booking.Activity.SeatActivity
 import com.example.movie_ticket_booking.R
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.math.log
 
 
-class SeatFragment(private val context: Context) : Fragment() {
+class SeatFragment() : Fragment() {
 
     private val selectedSeats = mutableListOf<String>()
     private val seatList = mutableListOf<String>()
     private lateinit var db: FirebaseFirestore
+    private val auth = FirebaseAuth.getInstance()
     private val theater = AppData.selectedTheater
     private val showtime = AppData.selectedShowtime
     private val date = AppData.selectedDate.toString()
@@ -50,28 +52,31 @@ class SeatFragment(private val context: Context) : Fragment() {
 
     private fun getReservedSeats() {
         db = FirebaseFirestore.getInstance()
-        db.collection("tickets")
+//        db.collection("Users").get().addOnSuccessListener {documents ->
+//            for (document in documents){
+//                val ticketSubColl = document.reference.collection("ticket")
+        db.collection("ticket")
             .whereEqualTo("movie_name", movie?.name)
             .whereEqualTo("theater_name", theater?.theaterName)
             .whereEqualTo("showtime", showtime?.showtime)
             .whereEqualTo("date", date?.trim())
-            .addSnapshotListener { value, error ->
-                for (document in value!!) {
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
                     // Lấy giá trị của trường seat và thêm vào list
-//                    val seat = document.getString("seat")
                     val seat = document["seat"] as ArrayList<String>?
                     seatList.addAll(seat!!)
-
                 }
                 initSeat()
-
             }
+
 
 
     }
 
-    fun initSeat(){
+    private fun initSeat() {
         val seatActivity = activity as SeatActivity
+
         val numRows = 8
         val seatsPerRow = 8
         var listRow: Char = 'A'
@@ -131,4 +136,6 @@ class SeatFragment(private val context: Context) : Fragment() {
             listRow += 1
         }
     }
+
+
 }

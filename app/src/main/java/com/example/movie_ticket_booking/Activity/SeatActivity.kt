@@ -17,8 +17,11 @@ import com.example.movie_ticket_booking.Interface.FoodItemClickListener
 import com.example.movie_ticket_booking.Model.FoodItem
 import com.example.movie_ticket_booking.R
 import com.google.firebase.firestore.FirebaseFirestore
+
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class SeatActivity : AppCompatActivity(), FoodItemClickListener {
     private lateinit var btnBack: ImageButton
@@ -32,49 +35,89 @@ class SeatActivity : AppCompatActivity(), FoodItemClickListener {
     private val selectedSeatsList = mutableListOf<String>()
     private val selectedFoodsList = mutableListOf<String>()
     private var check: Boolean = false
+    private var checkState: Boolean = true
     private var total: Long = 0
-    private lateinit var db: FirebaseFirestore
+    private val db = FirebaseFirestore.getInstance()
     private val theater = AppData.selectedTheater
     private val showtime = AppData.selectedShowtime
     private val date = AppData.selectedDate.toString()
     private val movie = AppData.selectedMovie
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movieseat)
 
+        Log.d("bvb", "$checkState")
         initView()
         btnBack.setOnClickListener {
             finish()
         }
 
 
-
-
-        replaceFragment(SeatFragment(this))
+        replaceFragment(SeatFragment())
 
         btnBook.setOnClickListener {
-
-            val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_layout_seat)
+            checkState()
+            val currentFragment =
+                supportFragmentManager.findFragmentById(R.id.frame_layout_seat)
 
             if (currentFragment is SeatFragment && check) {
+
                 replaceFragment(FoodFragment())
-            } else if (currentFragment is FoodFragment) {
-                val intent = Intent(this, PaymentActivity::class.java)
-                intent.putExtra("total", total)
-                intent.putStringArrayListExtra("seatList", ArrayList(selectedSeatsList))
-                intent.putStringArrayListExtra("foodList", ArrayList(selectedFoodsList))
-                startActivity(intent)
-                finish()
-            } else{
-                Toast.makeText(this, "bạn chua chọn ghế", Toast.LENGTH_LONG).show()
+                removeFragment(SeatFragment())
+            } else if (!check) {
+                Toast.makeText(this@SeatActivity, "bạn chua chọn ghế", Toast.LENGTH_LONG).show()
             }
 
+            if (currentFragment is FoodFragment) {
+
+                if (checkState) {
+                    Log.d("bvb", "$checkState")
+                    val data = hashMapOf(
+                        "movie_name" to "${movie?.name}",
+                        "seat" to ArrayList(selectedSeatsList),
+                        "showtime" to "${showtime?.showtime}"
+                    )
+                    db.collection("state").document(theater!!.id)
+                        .collection(convertDateFormat(date)).add(data)
+
+                    val intent = Intent(this, PaymentActivity::class.java)
+                    intent.putExtra("check", checkState)
+                    intent.putExtra("total", total)
+                    intent.putStringArrayListExtra("seatList", ArrayList(selectedSeatsList))
+                    intent.putStringArrayListExtra("foodList", ArrayList(selectedFoodsList))
+
+                    startActivity(intent)
+
+
+                }else{
+                    Toast.makeText(this,"Ghế đã được chọn", Toast.LENGTH_LONG).show()
+                }
+            }
         }
 
 
     }
 
-    private fun initView(){
+    fun convertDateFormat(inputDate: String): String {
+        try {
+            // Định dạng đầu vào
+            val inputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+            // Định dạng đầu ra
+            val outputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+
+            // Chuyển đổi chuỗi ngày từ định dạng đầu vào sang định dạng đầu ra
+            val date = inputFormat.parse(inputDate)
+            return outputFormat.format(date)
+        } catch (e: Exception) {
+            // Xử lý nếu có lỗi, ví dụ: in ra log hoặc thông báo lỗi
+            e.printStackTrace()
+            return inputDate // Trả về ngày không thay đổi nếu có lỗi
+        }
+    }
+
+    private fun initView() {
         btnBack = findViewById(R.id.btn_back_seat)
         tv_actionbar = findViewById(R.id.tv_actionBar)
         btnBook = findViewById(R.id.btn_seat_book)
@@ -87,15 +130,17 @@ class SeatActivity : AppCompatActivity(), FoodItemClickListener {
         movieName.text = movie?.name
         ticketPrice = movie?.price!!
     }
+
     fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.frame_layout_seat, fragment).commit()
     }
 
+    fun removeFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().remove(fragment).commit()
+    }
 
-    fun updateSelectedSeat(selectedSeats: List<String>){
-        if (selectedSeats.isNotEmpty()){
-            check = true
-        }
+    fun updateSelectedSeat(selectedSeats: List<String>) {
+        check = selectedSeats.isNotEmpty()
         // Cập nhật danh sách và hiển thị lên TextView
         selectedSeatsList.clear()
         selectedSeatsList.addAll(selectedSeats)
@@ -125,10 +170,51 @@ class SeatActivity : AppCompatActivity(), FoodItemClickListener {
         val formatter = NumberFormat.getInstance(Locale("vi", "VN"))
         return formatter.format(amount) + "đ"
     }
-    fun initFoodAdapter(recyclerView : RecyclerView, foodList: List<FoodItem>){
-        val foodAdapter = FoodAdapter(this,this)
+
+    fun initFoodAdapter(recyclerView: RecyclerView, foodList: List<FoodItem>) {
+        val foodAdapter = FoodAdapter(this, this)
         recyclerView.adapter = foodAdapter
         foodAdapter.setData(foodList)
+    }
+
+
+    private fun checkState() {
+
+
+        db.collection("state").document(theater!!.id).collection(convertDateFormat(date))
+            .whereEqualTo("showtime", showtime?.showtime)
+            .whereEqualTo("movie_name", movie?.name)
+            .whereArrayContainsAny("seat", selectedSeatsList)
+            .get().addOnSuccessListener { documents ->
+                for (document in documents ){
+                    val seat = document["seat"] as ArrayList<String>?
+                    Log.d("bvb", "ghe $seat")
+
+                    checkState = false
+
+                }
+
+                Log.d("bvb","check $checkState")
+
+            }
+
+    }
+
+
+    private fun checkTickets(): Boolean {
+        var check = true
+        db.collection("ticket")
+            .whereEqualTo("movie_name", movie)
+            .whereEqualTo("theater_name", theater)
+            .whereEqualTo("date", date)
+            .whereEqualTo("showtime", showtime)
+            .whereArrayContainsAny("seat", selectedSeatsList)
+            .get().addOnCompleteListener {
+                if (it.isSuccessful) {
+                    check = false
+                }
+            }
+        return check
     }
 
 //    fun getReservedSeats() : MutableList<String>{

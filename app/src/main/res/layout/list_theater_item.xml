@@ -11,7 +11,7 @@
     tools:context=".Activity.TheaterActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginBottom="10dp">
@@ -45,6 +45,8 @@
             android:layout_marginTop="-1dp"
             android:layout_gravity="center_vertical"
             />
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -71,6 +73,28 @@
             android:text="Đ"
             android:textColor="@color/white"
             android:textSize="16dp"/>
+        <TextView
+            android:id="@+id/tv_distant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#2196F3"
+            android:textSize="18dp"
+            android:layout_marginLeft="180dp"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id="@+id/tv_km"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text=" km"
+
+            android:textColor="#2196F3"
+            android:textSize="16dp"
+            android:visibility="gone"/>
 
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView

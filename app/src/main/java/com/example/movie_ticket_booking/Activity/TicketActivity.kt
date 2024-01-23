@@ -17,6 +17,7 @@ import com.example.movie_ticket_booking.Model.TicketItem
 import com.example.movie_ticket_booking.R
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,6 +25,7 @@ import kotlin.collections.ArrayList
 
 class TicketActivity : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
+    private val userID = FirebaseAuth.getInstance().currentUser!!.uid
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.my_ticket)
@@ -61,7 +63,9 @@ class TicketActivity : AppCompatActivity() {
         // Lấy ngày giờ hiện tại
         val currentDate = Calendar.getInstance().time
 
-        db.collection("tickets").whereEqualTo("user_id", uid).addSnapshotListener { value, error ->
+//        db.collection("tickets").whereEqualTo("user_id", uid)
+        db.collection("Users").document(userID).collection("ticket")
+            .addSnapshotListener { value, error ->
             if (error != null) {
                 // Xử lý lỗi nếu có
                 return@addSnapshotListener

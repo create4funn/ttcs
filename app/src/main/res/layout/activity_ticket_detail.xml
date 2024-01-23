@@ -124,11 +124,19 @@
         android:background="?android:attr/listDivider"
         android:backgroundTint="@color/black"
         android:layout_margin="40dp"/>
-    
+
     <ImageView
         android:id="@+id/ticketDetail_qrcode"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:background="@drawable/khungbutton"
+        android:text="Chỉ đường"
+        android:id="@+id/mapbtn" />
 </androidx.appcompat.widget.LinearLayoutCompat>

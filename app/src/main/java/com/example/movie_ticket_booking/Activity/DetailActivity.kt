@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.movie_ticket_booking.R
+import com.google.android.exoplayer2.SimpleExoPlayer
 import com.potyvideo.library.AndExoPlayerView
 import com.squareup.picasso.Picasso
 
@@ -48,6 +49,18 @@ class DetailActivity : AppCompatActivity() {
         }
 
         btnBookDetail.setOnClickListener {
+            try {
+                val playerField = AndExoPlayerView::class.java.getDeclaredField("player")
+                playerField.isAccessible = true
+
+                val exoPlayer = playerField.get(video) as? SimpleExoPlayer
+                exoPlayer?.playWhenReady = false
+
+            } catch (e: NoSuchFieldException) {
+                e.printStackTrace()
+            } catch (e: IllegalAccessException) {
+                e.printStackTrace()
+            }
             val intent = Intent(this, TheaterActivity::class.java)
             startActivity(intent)
         }
